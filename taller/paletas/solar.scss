@@ -1,0 +1,35 @@
+// Tema «solar» · tono 75 · acento 255 (complementario)
+// Generado por generar_paleta.py; no editar a mano.
+$fondo-claro: #fef8ee;
+$tarjeta-claro: #f8eddf;
+$borde-claro: #eedbc1;
+$texto-claro: #1e1508;
+$suave-claro: #655239;
+$principal-claro: #b47900;
+$acento-claro: #1a68bf;
+$fondo-oscuro: #140f08;
+$tarjeta-oscuro: #21180b;
+$borde-oscuro: #3a2b16;
+$texto-oscuro: #fdf0de;
+$suave-oscuro: #ccbfac;
+$principal-oscuro: #ffbb52;
+$acento-oscuro: #6bacff;
+
+:root {
+  --fondo: #fef8ee;
+  --tarjeta: #f8eddf;
+  --borde: #eedbc1;
+  --texto: #1e1508;
+  --suave: #655239;
+  --principal: #b47900;
+  --acento: #1a68bf;
+}
+:root.oscuro {
+  --fondo: #140f08;
+  --tarjeta: #21180b;
+  --borde: #3a2b16;
+  --texto: #fdf0de;
+  --suave: #ccbfac;
+  --principal: #ffbb52;
+  --acento: #6bacff;
+}

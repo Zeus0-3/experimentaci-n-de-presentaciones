@@ -1,0 +1,35 @@
+// Tema «datos-ia» · tono 275 · acento 95 (complementario)
+// Generado por generar_paleta.py; no editar a mano.
+$fondo-claro: #f6f7ff;
+$tarjeta-claro: #e9edff;
+$borde-claro: #dae0f7;
+$texto-claro: #15182b;
+$suave-claro: #575b6a;
+$principal-claro: #7482da;
+$acento-claro: #7f6900;
+$fondo-oscuro: #131418;
+$tarjeta-oscuro: #181a26;
+$borde-oscuro: #2c3045;
+$texto-oscuro: #e6ebfb;
+$suave-oscuro: #a5accd;
+$principal-oscuro: #92a2ff;
+$acento-oscuro: #efc800;
+
+:root {
+  --fondo: #f6f7ff;
+  --tarjeta: #e9edff;
+  --borde: #dae0f7;
+  --texto: #15182b;
+  --suave: #575b6a;
+  --principal: #7482da;
+  --acento: #7f6900;
+}
+:root.oscuro {
+  --fondo: #131418;
+  --tarjeta: #181a26;
+  --borde: #2c3045;
+  --texto: #e6ebfb;
+  --suave: #a5accd;
+  --principal: #92a2ff;
+  --acento: #efc800;
+}

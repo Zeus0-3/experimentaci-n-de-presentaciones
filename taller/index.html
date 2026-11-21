@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><title>Taller de diseño de presentaciones</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:"Source Serif 4";font-weight:700;src:url(fuentes/source-serif-4-latin-700-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:400;src:url(fuentes/source-sans-3-latin-400-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:600;src:url(fuentes/source-sans-3-latin-600-normal.woff2)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{display:grid;grid-template-columns:300px 1fr;font:15px/1.4 "Source Sans 3",system-ui,sans-serif;background:#f4f5f8;color:#1c1d2b}
+nav{background:#fff;border-right:1px solid #d6d8e4;overflow:auto;padding:1rem .9rem 2rem}
+nav h1{font:700 1.2rem/1.15 "Source Serif 4",serif;margin:.1rem .3rem .3rem}
+nav p.sub{margin:.1rem .3rem 1rem;color:#555;font-size:.85rem}
+nav h2{font:600 .72rem "Source Sans 3";text-transform:uppercase;letter-spacing:.1em;color:#6a6d85;margin:1.1rem .3rem .3rem}
+nav a{display:block;text-decoration:none;color:inherit;padding:.45rem .6rem;border-radius:8px;margin:1px 0;border-left:3px solid transparent}
+nav a:hover{background:#eef0f8}nav a.on{background:#e6e9fb;border-left-color:#5a5fc4;font-weight:600}
+nav a small{display:block;font-weight:400;color:#666;font-size:.78rem}
+nav a.arc{opacity:.75}nav a.arc.on{opacity:1}
+main{display:grid;grid-template-rows:auto 1fr;min-width:0}
+.barra{display:flex;gap:.8rem;align-items:center;padding:.5rem 1rem;background:#fff;border-bottom:1px solid #d6d8e4}
+.barra b{font:700 1.05rem "Source Serif 4",serif}.barra span{color:#555;font-size:.88rem;flex:1}
+.barra a{font-weight:600;color:#fff;background:#5a5fc4;text-decoration:none;padding:.35rem .8rem;border-radius:8px;font-size:.85rem}
+iframe{width:100%;height:100%;border:0;background:#f4f5f8}
+@media(max-width:820px){body{grid-template-columns:1fr;grid-template-rows:auto 1fr}nav{max-height:38vh}}
+</style>
+<body>
+<nav>
+  <h1>Taller de diseño de presentaciones</h1>
+  <p class="sub">Un sistema de diseño que se sortea una vez y se mantiene en toda la presentación. Todo funciona sin internet.</p>
+  <div id="menu"></div>
+</nav>
+<main>
+  <div class="barra"><b id="t"></b><span id="d"></span><a id="ab" target="_blank" rel="noopener">Abrir en su pestaña ↗</a></div>
+  <iframe id="v" title="Vista"></iframe>
+</main>
+<script>
+const PAGINAS=[
+ {grupo:"Sistema vigente",items:[
+  ["sorteador","app.html","Sorteador de estilo","Sortea paleta, estilo base y viñeta una sola vez; 8 láminas de ejemplo con espacios para gráfica y tabla. El corazón del taller."],
+  ["armonias","armonias.html","Armonías de color","Explicador visual: rueda de color y las 6 armonías (5 permitidas, 1 descartada) con un deslizador de tono."],
+  ["paletas","paletas/galeria.html","Galería de paletas","Salida de generar_paleta.py: 12 temas con sus razones de contraste (versión anterior, solo complementaria)."],
+  ["tipografia","tipografia.html","Tipografía","Las ocho familias de títulos probadas, el cuerpo, las tres monoespaciadas y la terminal animada."],
+  ["espacios","espacios.html","Tamaño y espacios","Lámina de 1280×720 con controles: cuerpo, título, interlineado, ancho, justificado y guiones."],
+  ["codigo","codigo.html","Componentes de código","Terminal, notebook (JupyterLab), editor, diferencias y salida; botón de copiar solo la entrada."],
+  ["estructura","estructura.html","Estructura de la diapositiva","Portada editorial, contenido con título-afirmación y pie completo, y sección de color lleno."]]},
+ {grupo:"Explorado y descartado (archivo)",items:[
+  ["estilos","estilos.html","20 estilos de presentación","Los 20 estilos que se compararon; Zeus eligió 11 y los demás quedaron fuera.",1],
+  ["vinetas","vinetas.html","Viñetas del cuerpo","Bento, cristal, neumorfismo, mesh y parallax como viñetas. El cristal y el mesh se descartaron por informales.",1],
+  ["tarjetas","tarjetas.html","Tarjetas: cuatro direcciones","Las cuatro propuestas de tarjetas; ninguna convenció («muy de IA»).",1]]}];
+const $=id=>document.getElementById(id), todas=PAGINAS.flatMap(g=>g.items);
+$("menu").innerHTML=PAGINAS.map(g=>`<h2>${g.grupo}</h2>`+g.items.map(([id,url,t,d,arc])=>`<a href="#${id}" data-id="${id}" class="${arc?"arc":""}">${t}<small>${d.split(".")[0]}.</small></a>`).join("")).join("");
+function ir(){const id=(location.hash||"#sorteador").slice(1),p=todas.find(x=>x[0]===id)||todas[0];
+  $("v").src=p[1];$("t").textContent=p[2];$("d").textContent=p[3];$("ab").href=p[1];
+  document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.dataset.id===p[0]));document.title=p[2]+" · Taller de presentaciones";}
+addEventListener("hashchange",ir);addEventListener("keydown",e=>{if(e.altKey&&(e.key==="ArrowDown"||e.key==="ArrowUp")){const i=todas.findIndex(x=>x[0]===(location.hash||"#sorteador").slice(1)),n=(i+(e.key==="ArrowDown"?1:-1)+todas.length)%todas.length;location.hash=todas[n][0]}});
+ir();
+</script></html>

@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><title>Tarjetas: cuatro direcciones</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:"Source Serif 4";font-weight:600;src:url(fuentes/source-serif-4-latin-600-normal.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:700;src:url(fuentes/source-serif-4-latin-700-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:400;src:url(fuentes/source-sans-3-latin-400-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:600;src:url(fuentes/source-sans-3-latin-600-normal.woff2)}
+body{margin:0;font:15px system-ui;background:#e9eef0;color:#222}
+header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid #ccd;padding:.7rem 1.2rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+select{font:inherit;padding:.3rem .5rem;border-radius:6px;border:1px solid #99a;background:#fff}
+#aviso{font-size:.85rem;color:#556}.bad{color:#a11;font-weight:700}.good{color:#176b3a}
+h2.g{margin:1.2rem 1.2rem .2rem;font:700 1.05rem system-ui}
+main{padding:.6rem 1.2rem 2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(520px,1fr));gap:1.2rem}
+.marco h3{font:600 .82rem system-ui;margin:0 0 .3rem;color:#445}
+.caja{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border:1px solid #bbc;box-shadow:0 4px 16px #0002}
+.lam{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:top left;box-sizing:border-box;padding:56px 60px;
+  background:var(--fondo);color:var(--texto);font:400 29px/1.38 "Source Sans 3",sans-serif}
+.lam h2{font:700 56px/1.1 "Source Serif 4",serif;color:var(--principal);margin:0 0 .5em;max-width:22ch;letter-spacing:-.01em}
+.grid{display:grid;gap:26px}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.t{font:700 34px/1.15 "Source Serif 4",serif}.p{font-size:25px;line-height:1.35;margin-top:.35em}.cita{font-size:19px;color:var(--suave);margin-top:.5em}
+.ic{width:1.6em;height:1.6em}
+/* A · sin caja, línea y número */
+.A{border-top:3px solid var(--borde);padding-top:14px}.A .n{font:700 78px/1 "Source Serif 4",serif;color:var(--principal);opacity:.9}.A .t{color:var(--texto);margin-top:.1em}.A .p{color:var(--texto)}
+/* B · tarjeta limpia con sombra suave */
+.B{background:color-mix(in srgb,var(--fondo) 55%,#fff);border:1px solid var(--borde);border-radius:18px;padding:24px 26px;box-shadow:0 8px 22px color-mix(in srgb,var(--texto) 12%,transparent)}
+.B .circ{width:64px;height:64px;border-radius:50%;background:var(--principal);color:var(--sobre-p);display:grid;place-items:center;margin-bottom:14px}
+.B .circ svg{width:34px;height:34px}.B .t{color:var(--texto)}
+/* C · franja lateral */
+.C{border-left:9px solid var(--acento);padding:6px 0 6px 24px;background:linear-gradient(90deg,color-mix(in srgb,var(--tarjeta) 55%,transparent),transparent 85%)}.C .t{color:var(--texto)}.C .k{font:600 21px "Source Sans 3";text-transform:uppercase;letter-spacing:.09em;color:var(--acento);margin-bottom:.15em}
+/* D · bloque lleno */
+.D{background:var(--principal);color:var(--sobre-p);border-radius:16px;padding:24px 26px}.D .t{color:var(--sobre-p)}.D .p{color:var(--sobre-p)}.D .circ{width:60px;height:60px;border-radius:12px;background:color-mix(in srgb,var(--sobre-p) 20%,transparent);display:grid;place-items:center;margin-bottom:12px}.D svg{width:34px;height:34px}.D .cita{color:var(--sobre-p);opacity:.9}
+/* perfil visual: más aire, menos texto, icono grande */
+.vis .grid{margin-top:70px;gap:34px}.vis .t{font-size:42px}.vis .p{font-size:28px}.vis.lam h2{font-size:64px}
+svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+</style>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i1" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></symbol>
+<symbol id="i2" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></symbol>
+<symbol id="i3" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+<symbol id="i4" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol></defs></svg>
+<header><b>Tarjetas: cuatro direcciones</b>
+ <label>Tema <select id="tema"></select></label><label>Modo <select id="modo"><option value="claro">Claro</option><option value="oscuro">Oscuro</option></select></label><span id="aviso"></span></header>
+<h2 class="g">Perfil apunte (se entiende al leer)</h2><main id="apunte"></main>
+<h2 class="g">Perfil visual (poco texto)</h2><main id="visual"></main>
+<script>
+const PALETAS=[
+  {
+    "nombre": "solar",
+    "tono": 75,
+    "acento_tono": 255,
+    "claro": {
+      "colores": {
+        "fondo": "#fef8ee",
+        "tarjeta": "#f8eddf",
+        "borde": "#eedbc1",
+        "texto": "#1e1508",
+        "suave": "#655239",
+        "principal": "#b47900",
+        "acento": "#1a68bf"
+      },
+      "razones": {
+        "texto/fondo": 17.07,
+        "suave/fondo": 7.0,
+        "principal/fondo": 3.48,
+        "acento/fondo": 5.27,
+        "principal/tarjeta": 3.19,
+        "acento/tarjeta": 4.83,
+        "borde/fondo": 1.28
+      },
+      "separacion_gris": 0.103,
+      "intentos": 3
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#140f08",
+        "tarjeta": "#21180b",
+        "borde": "#3a2b16",
+        "texto": "#fdf0de",
+        "suave": "#ccbfac",
+        "principal": "#ffbb52",
+        "acento": "#6bacff"
+      },
+      "razones": {
+        "texto/fondo": 17.01,
+        "suave/fondo": 10.56,
+        "principal/fondo": 11.35,
+        "acento/fondo": 8.17,
+        "principal/tarjeta": 10.37,
+        "acento/tarjeta": 7.46,
+        "borde/fondo": 1.41
+      },
+      "separacion_gris": 0.1,
+      "intentos": 1
+    }
+  },
+  {
+    "nombre": "edificios",
+    "tono": 45,
+    "acento_tono": 225,
+    "claro": {
+      "colores": {
+        "fondo": "#fffbf9",
+        "tarjeta": "#ffeae1",
+        "borde": "#eacabc",
+        "texto": "#2e180e",
+        "suave": "#6d5951",
+        "principal": "#cb5c1e",
+        "acento": "#007595"
+      },
+      "razones": {
+        "texto/fondo": 16.2,
+        "suave/fondo": 6.35,
+        "principal/fondo": 4.01,
+        "acento/fondo": 5.11,
+        "principal/tarjeta": 3.57,
+        "acento/tarjeta": 4.54,
+        "borde/fondo": 1.49
+      },
+      "separacion_gris": 0.081,
+      "intentos": 1
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#100c0a",
+        "tarjeta": "#26140b",
+        "borde": "#3c2c24",
+        "texto": "#ffe7dd",
+        "suave": "#c0a79c",
+        "principal": "#e76822",
+        "acento": "#10cbff"
+      },
+      "razones": {
+        "texto/fondo": 16.49,
+        "suave/fondo": 8.55,
+        "principal/fondo": 5.95,
+        "acento/fondo": 10.23,
+        "principal/tarjeta": 5.42,
+        "acento/tarjeta": 9.31,
+        "borde/fondo": 1.46
+      },
+      "separacion_gris": 0.121,
+      "intentos": 1
+    }
+  },
+  {
+    "nombre": "datos-ia",
+    "tono": 275,
+    "acento_tono": 95,
+    "claro": {
+      "colores": {
+        "fondo": "#f6f7ff",
+        "tarjeta": "#e9edff",
+        "borde": "#dae0f7",
+        "texto": "#15182b",
+        "suave": "#575b6a",
+        "principal": "#7482da",
+        "acento": "#7f6900"
+      },
+      "razones": {
+        "texto/fondo": 16.46,
+        "suave/fondo": 6.36,
+        "principal/fondo": 3.31,
+        "acento/fondo": 5.01,
+        "principal/tarjeta": 3.02,
+        "acento/tarjeta": 4.58,
+        "borde/fondo": 1.23
+      },
+      "separacion_gris": 0.108,
+      "intentos": 9
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#131418",
+        "tarjeta": "#181a26",
+        "borde": "#2c3045",
+        "texto": "#e6ebfb",
+        "suave": "#a5accd",
+        "principal": "#92a2ff",
+        "acento": "#efc800"
+      },
+      "razones": {
+        "texto/fondo": 15.45,
+        "suave/fondo": 8.25,
+        "principal/fondo": 7.75,
+        "acento/fondo": 11.37,
+        "principal/tarjeta": 7.25,
+        "acento/tarjeta": 10.64,
+        "borde/fondo": 1.42
+      },
+      "separacion_gris": 0.104,
+      "intentos": 2
+    }
+  },
+  {
+    "nombre": "ambiente",
+    "tono": 160,
+    "acento_tono": 340,
+    "claro": {
+      "colores": {
+        "fondo": "#f5faf7",
+        "tarjeta": "#e5f1ea",
+        "borde": "#c9e5d5",
+        "texto": "#0b1912",
+        "suave": "#56665d",
+        "principal": "#009561",
+        "acento": "#99297d"
+      },
+      "razones": {
+        "texto/fondo": 17.19,
+        "suave/fondo": 5.79,
+        "principal/fondo": 3.66,
+        "acento/fondo": 6.7,
+        "principal/tarjeta": 3.31,
+        "acento/tarjeta": 6.07,
+        "borde/fondo": 1.28
+      },
+      "separacion_gris": 0.105,
+      "intentos": 10
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#0a110d",
+        "tarjeta": "#0d261a",
+        "borde": "#1d3a2b",
+        "texto": "#e1f8eb",
+        "suave": "#a5bbae",
+        "principal": "#5bc692",
+        "acento": "#ffaae3"
+      },
+      "razones": {
+        "texto/fondo": 17.08,
+        "suave/fondo": 9.41,
+        "principal/fondo": 9.02,
+        "acento/fondo": 10.97,
+        "principal/tarjeta": 7.58,
+        "acento/tarjeta": 9.22,
+        "borde/fondo": 1.54
+      },
+      "separacion_gris": 0.088,
+      "intentos": 1
+    }
+  },
+  {
+    "nombre": "lima-116",
+    "tono": 116.6,
+    "acento_tono": 296.6,
+    "claro": {
+      "colores": {
+        "fondo": "#fcfdf6",
+        "tarjeta": "#f1f7da",
+        "borde": "#cfd5bc",
+        "texto": "#21250e",
+        "suave": "#535644",
+        "principal": "#778500",
+        "acento": "#6f22cc"
+      },
+      "razones": {
+        "texto/fondo": 15.36,
+        "suave/fondo": 7.37,
+        "principal/fondo": 4.01,
+        "acento/fondo": 7.37,
+        "principal/tarjeta": 3.73,
+        "acento/tarjeta": 6.86,
+        "borde/fondo": 1.48
+      },
+      "separacion_gris": 0.107,
+      "intentos": 9
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#0c0d07",
+        "tarjeta": "#23251b",
+        "borde": "#393d28",
+        "texto": "#f2f7df",
+        "suave": "#aeb593",
+        "principal": "#99a900",
+        "acento": "#c5afff"
+      },
+      "razones": {
+        "texto/fondo": 17.72,
+        "suave/fondo": 9.11,
+        "principal/fondo": 7.45,
+        "acento/fondo": 10.14,
+        "principal/tarjeta": 5.97,
+        "acento/tarjeta": 8.12,
+        "borde/fondo": 1.73
+      },
+      "separacion_gris": 0.103,
+      "intentos": 1
+    }
+  },
+  {
+    "nombre": "naranja-54",
+    "tono": 54.3,
+    "acento_tono": 234.3,
+    "claro": {
+      "colores": {
+        "fondo": "#fffaf7",
+        "tarjeta": "#f7ebe4",
+        "borde": "#eddcd2",
+        "texto": "#231912",
+        "suave": "#624a3a",
+        "principal": "#d06a00",
+        "acento": "#00739f"
+      },
+      "razones": {
+        "texto/fondo": 16.69,
+        "suave/fondo": 7.94,
+        "principal/fondo": 3.54,
+        "acento/fondo": 5.14,
+        "principal/tarjeta": 3.13,
+        "acento/tarjeta": 4.54,
+        "borde/fondo": 1.28
+      },
+      "separacion_gris": 0.109,
+      "intentos": 4
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#191512",
+        "tarjeta": "#2a1a10",
+        "borde": "#46372e",
+        "texto": "#f5e9e1",
+        "suave": "#c7b0a1",
+        "principal": "#e27300",
+        "acento": "#32beff"
+      },
+      "razones": {
+        "texto/fondo": 15.24,
+        "suave/fondo": 8.76,
+        "principal/fondo": 5.78,
+        "acento/fondo": 8.64,
+        "principal/tarjeta": 5.33,
+        "acento/tarjeta": 7.97,
+        "borde/fondo": 1.61
+      },
+      "separacion_gris": 0.088,
+      "intentos": 3
+    }
+  },
+  {
+    "nombre": "azul-234",
+    "tono": 234.3,
+    "acento_tono": 54.3,
+    "claro": {
+      "colores": {
+        "fondo": "#f2f9fd",
+        "tarjeta": "#e1f4ff",
+        "borde": "#c5d6df",
+        "texto": "#0f1e27",
+        "suave": "#44555f",
+        "principal": "#0090c7",
+        "acento": "#974d0a"
+      },
+      "razones": {
+        "texto/fondo": 15.9,
+        "suave/fondo": 7.28,
+        "principal/fondo": 3.39,
+        "acento/fondo": 5.81,
+        "principal/tarjeta": 3.19,
+        "acento/tarjeta": 5.47,
+        "borde/fondo": 1.4
+      },
+      "separacion_gris": 0.114,
+      "intentos": 3
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#050f15",
+        "tarjeta": "#131b20",
+        "borde": "#1e313c",
+        "texto": "#e8f6ff",
+        "suave": "#9fc3d9",
+        "principal": "#00a7e5",
+        "acento": "#ff984d"
+      },
+      "razones": {
+        "texto/fondo": 17.6,
+        "suave/fondo": 10.42,
+        "principal/fondo": 7.06,
+        "acento/fondo": 9.11,
+        "principal/tarjeta": 6.34,
+        "acento/tarjeta": 8.19,
+        "borde/fondo": 1.45
+      },
+      "separacion_gris": 0.089,
+      "intentos": 4
+    }
+  },
+  {
+    "nombre": "rojo-26",
+    "tono": 26.1,
+    "acento_tono": 206.1,
+    "claro": {
+      "colores": {
+        "fondo": "#fff5f4",
+        "tarjeta": "#f8e9e7",
+        "borde": "#e9c9c5",
+        "texto": "#28100e",
+        "suave": "#7a5551",
+        "principal": "#d7645c",
+        "acento": "#006871"
+      },
+      "razones": {
+        "texto/fondo": 16.79,
+        "suave/fondo": 6.05,
+        "principal/fondo": 3.36,
+        "acento/fondo": 6.14,
+        "principal/tarjeta": 3.05,
+        "acento/tarjeta": 5.57,
+        "borde/fondo": 1.44
+      },
+      "separacion_gris": 0.17,
+      "intentos": 6
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#181110",
+        "tarjeta": "#261615",
+        "borde": "#4a2f2c",
+        "texto": "#ffedeb",
+        "suave": "#cab6b4",
+        "principal": "#fc5550",
+        "acento": "#00d2e5"
+      },
+      "razones": {
+        "texto/fondo": 16.51,
+        "suave/fondo": 9.67,
+        "principal/fondo": 5.84,
+        "acento/fondo": 10.12,
+        "principal/tarjeta": 5.43,
+        "acento/tarjeta": 9.41,
+        "borde/fondo": 1.54
+      },
+      "separacion_gris": 0.112,
+      "intentos": 1
+    }
+  },
+  {
+    "nombre": "turquesa-192",
+    "tono": 192.9,
+    "acento_tono": 12.9,
+    "claro": {
+      "colores": {
+        "fondo": "#f5fdfd",
+        "tarjeta": "#def2f1",
+        "borde": "#b1dedc",
+        "texto": "#122020",
+        "suave": "#2e5b5a",
+        "principal": "#009492",
+        "acento": "#aa394e"
+      },
+      "razones": {
+        "texto/fondo": 16.2,
+        "suave/fondo": 7.36,
+        "principal/fondo": 3.61,
+        "acento/fondo": 5.98,
+        "principal/tarjeta": 3.21,
+        "acento/tarjeta": 5.31,
+        "borde/fondo": 1.42
+      },
+      "separacion_gris": 0.09,
+      "intentos": 1
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#0e1313",
+        "tarjeta": "#0b1c1b",
+        "borde": "#283c3c",
+        "texto": "#e0f0ef",
+        "suave": "#a5c7c5",
+        "principal": "#00b7b5",
+        "acento": "#ffa0aa"
+      },
+      "razones": {
+        "texto/fondo": 15.88,
+        "suave/fondo": 10.28,
+        "principal/fondo": 7.54,
+        "acento/fondo": 9.66,
+        "principal/tarjeta": 7.1,
+        "acento/tarjeta": 9.09,
+        "borde/fondo": 1.61
+      },
+      "separacion_gris": 0.098,
+      "intentos": 3
+    }
+  },
+  {
+    "nombre": "lima-131",
+    "tono": 131.6,
+    "acento_tono": 311.6,
+    "claro": {
+      "colores": {
+        "fondo": "#f8fff4",
+        "tarjeta": "#e4f3d9",
+        "borde": "#c9d7bf",
+        "texto": "#171c13",
+        "suave": "#414e36",
+        "principal": "#6a9442",
+        "acento": "#8c3fb5"
+      },
+      "razones": {
+        "texto/fondo": 17.07,
+        "suave/fondo": 8.68,
+        "principal/fondo": 3.49,
+        "acento/fondo": 5.9,
+        "principal/tarjeta": 3.07,
+        "acento/tarjeta": 5.19,
+        "borde/fondo": 1.48
+      },
+      "separacion_gris": 0.094,
+      "intentos": 16
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#0b0f08",
+        "tarjeta": "#192112",
+        "borde": "#353d2f",
+        "texto": "#e7efe2",
+        "suave": "#a1b394",
+        "principal": "#96e044",
+        "acento": "#d183ff"
+      },
+      "razones": {
+        "texto/fondo": 16.45,
+        "suave/fondo": 8.65,
+        "principal/fondo": 12.06,
+        "acento/fondo": 7.77,
+        "principal/tarjeta": 10.3,
+        "acento/tarjeta": 6.64,
+        "borde/fondo": 1.72
+      },
+      "separacion_gris": 0.089,
+      "intentos": 1
+    }
+  },
+  {
+    "nombre": "rojo-20",
+    "tono": 20.9,
+    "acento_tono": 200.9,
+    "claro": {
+      "colores": {
+        "fondo": "#fff8f8",
+        "tarjeta": "#ffedec",
+        "borde": "#eeccca",
+        "texto": "#2d2322",
+        "suave": "#6b5b5b",
+        "principal": "#d25f61",
+        "acento": "#007076"
+      },
+      "razones": {
+        "texto/fondo": 14.62,
+        "suave/fondo": 6.1,
+        "principal/fondo": 3.61,
+        "acento/fondo": 5.57,
+        "principal/tarjeta": 3.34,
+        "acento/tarjeta": 5.15,
+        "borde/fondo": 1.42
+      },
+      "separacion_gris": 0.131,
+      "intentos": 2
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#1d1211",
+        "tarjeta": "#221615",
+        "borde": "#3a2b2b",
+        "texto": "#ffefee",
+        "suave": "#d6b0ae",
+        "principal": "#f15d63",
+        "acento": "#00e6f1"
+      },
+      "razones": {
+        "texto/fondo": 16.42,
+        "suave/fondo": 9.34,
+        "principal/fondo": 5.66,
+        "acento/fondo": 11.88,
+        "principal/tarjeta": 5.43,
+        "acento/tarjeta": 11.4,
+        "borde/fondo": 1.37
+      },
+      "separacion_gris": 0.17,
+      "intentos": 4
+    }
+  },
+  {
+    "nombre": "turquesa-182",
+    "tono": 182.7,
+    "acento_tono": 2.7,
+    "claro": {
+      "colores": {
+        "fondo": "#edfdfa",
+        "tarjeta": "#def7f2",
+        "borde": "#c4e3dd",
+        "texto": "#041815",
+        "suave": "#375a55",
+        "principal": "#008a7d",
+        "acento": "#9f1851"
+      },
+      "razones": {
+        "texto/fondo": 17.44,
+        "suave/fondo": 7.24,
+        "principal/fondo": 4.05,
+        "acento/fondo": 7.35,
+        "principal/tarjeta": 3.78,
+        "acento/tarjeta": 6.86,
+        "borde/fondo": 1.31
+      },
+      "separacion_gris": 0.105,
+      "intentos": 9
+    },
+    "oscuro": {
+      "colores": {
+        "fondo": "#0b1614",
+        "tarjeta": "#142320",
+        "borde": "#1f3a36",
+        "texto": "#e1f5f1",
+        "suave": "#9ac6be",
+        "principal": "#00af9e",
+        "acento": "#ff8faf"
+      },
+      "razones": {
+        "texto/fondo": 16.29,
+        "suave/fondo": 9.86,
+        "principal/fondo": 6.71,
+        "acento/fondo": 8.61,
+        "principal/tarjeta": 5.93,
+        "acento/tarjeta": 7.6,
+        "borde/fondo": 1.51
+      },
+      "separacion_gris": 0.101,
+      "intentos": 2
+    }
+  }
+], $=id=>document.getElementById(id);
+const ICO=(n)=>`<svg><use href="#i${n}"/></svg>`;
+const DATOS=[["Entradas","Los datos y supuestos con los que arranca el modelo: clima, geometría y materiales.","(sec. 2)","Entradas","Datos y supuestos"],
+ ["Modelo","Un conjunto de ecuaciones que resume cómo se comporta el sistema que se estudia.","(sec. 3)","Modelo","Ecuaciones del sistema"],
+ ["Resultados","Series de tiempo y cifras que se comparan contra un caso base de referencia.","(sec. 4)","Resultados","Series y cifras"],
+ ["Verificación","Se revisa que el resultado tenga sentido antes de usarlo para decidir.","(sec. 5)","Verificación","¿Tiene sentido?"]];
+const ICONOS=[1,2,3,4];
+function tarj(est,i,vis,total){
+  const [t,p,c,tv,pv]=DATOS[i], tx=vis?pv:p, ti=vis?tv:t;
+  if(est==="A")return `<div class="A"><div class="n">0${i+1}</div><div class="t">${ti}</div><div class="p">${tx}</div>${vis?"":`<div class="cita">${c}</div>`}</div>`;
+  if(est==="B")return `<div class="B"><div class="circ">${ICO(ICONOS[i])}</div><div class="t">${ti}</div><div class="p">${tx}</div>${vis?"":`<div class="cita">${c}</div>`}</div>`;
+  if(est==="C")return `<div class="C"><div class="k">Paso ${i+1}</div><div class="t">${ti}</div><div class="p">${tx}</div>${vis?"":`<div class="cita">${c}</div>`}</div>`;
+  return `<div class="D"><div class="circ">${ICO(ICONOS[i])}</div><div class="t">${ti}</div><div class="p">${tx}</div>${vis?"":`<div class="cita">${c}</div>`}</div>`;
+}
+const NOM={A:"A · Sin caja, con línea y número",B:"B · Tarjeta limpia con sombra suave",C:"C · Franja lateral de color",D:"D · Bloque de color lleno"};
+function armar(){
+  for(const [id,vis] of [["apunte",false],["visual",true]]){
+    $(id).innerHTML=["A","B","C","D"].map(e=>{const n=vis?4:3;
+      return `<div class="marco"><h3>${NOM[e]}</h3><div class="caja"><div class="lam ${vis?"vis":""}"><h2>${vis?"Cómo funciona una simulación":"Una simulación en cuatro pasos que se pueden revisar"}</h2>
+      <div class="grid ${vis?"g4":"g3"}">${Array.from({length:n},(_,i)=>tarj(e,i,vis)).join("")}</div></div></div></div>`;}).join("");
+  }
+}
+function lum(h){const c=[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255).map(v=>v<=0.04045?v/12.92:((v+0.055)/1.055)**2.4);return .2126*c[0]+.7152*c[1]+.0722*c[2];}
+function razon(a,b){const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);}
+PALETAS.forEach((p,i)=>$("tema").add(new Option(`${p.nombre} (tono ${p.tono}°)`,i)));
+$("tema").value=PALETAS.findIndex(p=>p.nombre==="turquesa-192");
+function aplicar(){
+  const c=PALETAS[$("tema").value][$("modo").value].colores;
+  const rf=razon(c.fondo,c.principal), rt=razon(c.texto,c.principal), sobre=rf>=rt?c.fondo:c.texto, r=Math.max(rf,rt);
+  document.querySelectorAll(".lam").forEach(l=>{for(const k in c)l.style.setProperty("--"+k,c[k]);l.style.setProperty("--sobre-p",sobre);});
+  $("aviso").innerHTML=`Texto sobre el color principal (bloque lleno D, círculos de B): ${r.toFixed(2)}:1 `+(r>=4.5?'<span class="good">✓ cumple 4.5:1</span>':'<span class="bad">⚠ no llega a 4.5:1: ese texto es pequeño</span>');
+  document.body.style.background=$("modo").value==="oscuro"?"#2a2e33":"#e9eef0";
+}
+function escalar(){document.querySelectorAll(".lam").forEach(l=>{l.style.transform=`scale(${l.parentElement.clientWidth/1280})`;});}
+armar(); $("tema").onchange=$("modo").onchange=aplicar; addEventListener("resize",escalar);
+document.fonts.ready.then(()=>{aplicar();escalar();});
+</script></html>

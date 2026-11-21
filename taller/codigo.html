@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><title>Componentes de código</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:"Source Serif 4";font-weight:700;src:url(fuentes/source-serif-4-latin-700-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:400;src:url(fuentes/source-sans-3-latin-400-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:600;src:url(fuentes/source-sans-3-latin-600-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:400;src:url(fuentes/jetbrains-mono-latin-400-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:700;src:url(fuentes/jetbrains-mono-latin-700-normal.woff2)}
+:root{--fondo:#f5fdfd;--tarjeta:#def2f1;--borde:#b1dedc;--texto:#122020;--suave:#2e5b5a;--principal:#009492;--acento:#aa394e}
+html{background:#e9eef0}
+body{margin:0}
+#escala{transform-origin:top left;width:1280px}
+.lam{width:1280px;background:var(--fondo);color:var(--texto);font:400 29px/1.38 "Source Sans 3",sans-serif;padding:50px 60px 60px;box-sizing:border-box}
+h1{font:700 56px/1.1 "Source Serif 4",serif;color:var(--principal);margin:0 0 .15em}
+p.n{margin:0 0 .8em;font-size:.72em;color:var(--suave);max-width:64ch}
+h2{font:600 .62em "Source Sans 3";text-transform:uppercase;letter-spacing:.09em;color:var(--acento);margin:1.6em 0 .5em;border-bottom:2px solid var(--borde);padding-bottom:.2em}
+h3{font:600 .56em "Source Sans 3";margin:0 0 .3em;color:var(--suave)}
+.fila{display:grid;gap:22px}.f2{grid-template-columns:1fr 1fr}.f3{grid-template-columns:1fr 1fr 1fr}
+.mono{font-family:"JetBrains Mono",monospace;font-size:.64em;line-height:1.5}
+button{font:600 .5em "Source Sans 3";border:0;background:var(--principal);color:#fff;padding:.4em .9em;border-radius:8px;cursor:pointer}
+/* botón de copiar: solo copia la ENTRADA */
+.term,.celda{position:relative}
+.cp{position:absolute;top:10px;right:14px;font:600 .46em "Source Sans 3";background:rgba(255,255,255,.92);color:#37474f;border:1px solid #b0bec5;border-radius:6px;padding:.25em .7em;cursor:pointer;opacity:.85}
+.term .cp{background:#21262d;color:#c9d1d9;border-color:#30363d;top:46px}
+.cp:hover{opacity:1;background:var(--principal);color:#fff;border-color:var(--principal)}
+.cp.ok{background:#2e7d32;color:#fff;border-color:#2e7d32}
+details{margin-top:14px}summary{font:600 .55em "Source Sans 3";color:var(--suave);cursor:pointer}
+@media print{.cp{display:none}}
+/* terminal */
+.term{background:#0d1117;border-radius:12px;box-shadow:0 8px 24px #0004;overflow:hidden}
+.term .barra{display:flex;gap:7px;align-items:center;padding:10px 14px;background:#161b22}
+.term .barra i{width:13px;height:13px;border-radius:50%;display:block}.term .barra b{margin-left:8px;font:500 .5em "Source Sans 3";color:#8b949e}
+.term pre{margin:0;padding:18px 22px;min-height:7.6em;color:#e6edf3;white-space:pre-wrap}
+.tp{color:#3fb950}.tf{color:#79c0ff}.ts{color:#e3b341}.tm{color:#8b949e}.to{color:#7ee787}.te{color:#ff7b72}
+.cur{display:inline-block;width:.6em;height:1.15em;background:#e6edf3;vertical-align:text-bottom;animation:par 1s steps(1) infinite}
+@keyframes par{50%{opacity:0}}
+/* notebooks */
+.nb{border-radius:10px;overflow:hidden;border:1px solid #cfd8dc;background:#fff;color:#212121}
+.nb .rot{font:600 .5em "Source Sans 3";padding:6px 12px;background:#eceff1;color:#455a64;letter-spacing:.05em}
+.celda{display:grid;grid-template-columns:5.6em 1fr;gap:0;padding:8px 10px 2px}
+.pr{font-family:"JetBrains Mono";font-size:.6em;text-align:right;padding:.55em .8em 0 0;white-space:nowrap}
+.cod{font-family:"JetBrains Mono";font-size:.62em;line-height:1.5;white-space:pre;padding:.5em .7em;border-radius:3px;min-height:5.6em;overflow:hidden}
+.sal{opacity:0;transition:opacity .5s;margin:0 10px 8px}.sal.v{opacity:1}
+.sal .cod{min-height:0;padding:.2em .7em}
+/* VS Code claro */
+.vs .cod{background:#fff;border-left:3px solid #0078d4;color:#000}
+.vs .pr{color:#6e7681}.vs .k{color:#af00db}.vs .s{color:#a31515}.vs .n{color:#098658}.vs .c{color:#008000}.vs .f{color:#795e26}.vs .v{color:#001080}.vs .i{color:#0000ff}
+/* JupyterLab clásico */
+.jl .cod{background:#f5f5f5;border:1px solid #cfcfcf}
+.jl .pr{color:#303f9f}.jl .po{color:#d84315}.jl .k{color:#008000;font-weight:700}.jl .s{color:#ba2121}.jl .n{color:#666}.jl .c{color:#408080;font-style:italic}.jl .f{color:#00f}.jl .v{color:#212121}.jl .i{color:#008000;font-weight:700}
+/* Colab */
+.co .cod{background:#f8f9fa;border:1px solid #e0e0e0}
+.co .pr{color:#5f6368}.co .k{color:#aa22ff;font-weight:700}.co .s{color:#ba2121}.co .n{color:#b25000}.co .c{color:#408080;font-style:italic}.co .f{color:#0000ff}.co .v{color:#212121}.co .i{color:#aa22ff;font-weight:700}
+.co .celda{grid-template-columns:3.2em 1fr}.co .pr{font-size:1.1em;padding-top:.2em}
+/* editor */
+.ed{background:#fff;border:1px solid #cfd8dc;border-radius:10px;overflow:hidden}
+.ed .tab{background:#f3f3f3;padding:0;display:flex}.ed .tab span{font:500 .5em "Source Sans 3";padding:8px 14px;background:#fff;border-top:2px solid var(--principal);color:#333}
+.ed pre{margin:0;padding:.6em 0;color:#000}.ed .ln{display:inline-block;width:2.6em;text-align:right;color:#9aa0a6;padding-right:1em;user-select:none}
+.ed .k{color:#0451a5}.ed .s{color:#a31515}.ed .c{color:#008000}.ed .n{color:#098658}.ed .b{color:#0000ff}
+/* diff */
+.dif{border:1px solid #cfd8dc;border-radius:10px;overflow:hidden;background:#fff}
+.dif .t{font:600 .5em "Source Sans 3";padding:6px 12px;background:#f3f4f6;color:#555}
+.dif pre{margin:0;padding:.4em 0}.dif .l{display:block;padding:0 12px;white-space:pre-wrap}
+.dif .m{background:#ffebe9;color:#82071e}.dif .a{background:#dafbe1;color:#116329}.dif .x{color:#57606a}
+/* salida */
+.out{background:#f6f8fa;border:1px solid #d0d7de;border-left:6px solid var(--principal);border-radius:8px;padding:.5em .9em;white-space:pre;color:#24292f}
+.out .ok{color:#116329;font-weight:700}.out .av{color:#9a6700}
+</style>
+<body><div id="escala"><div class="lam" id="lam">
+
+<h1>Código que se parece al tuyo</h1>
+<p class="n">Cada tipo de código se ve como en el lugar donde lo usas: terminal, notebook, editor. JetBrains Mono, 29 px de cuerpo, lámina de 1280 px (aquí reducida). Los colores de los notebooks son <b>aproximados</b> a mano; se afinan con capturas reales cuando elijas.</p>
+<button onclick="correr()">▶ Repetir animaciones</button>
+
+<h2>1 · Terminal (estilo oscuro genérico)</h2>
+<div class="term"><div class="barra"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i><b>zsh — presentacion-kb-idb</b></div><pre id="term" class="mono"></pre><button class="cp" data-copiar="term" title="Copia solo el comando, sin el prompt ni la salida">Copiar comando</button></div>
+
+<h2>2 · Notebook de Jupyter: JupyterLab / clásico (el estándar)</h2>
+<div class="nb jl"><div class="rot">grados_hora.ipynb · Python 3</div><div class="celda"><div class="pr" data-p></div><div class="cod" data-codigo></div><button class="cp" data-copiar="nb" title="Copia solo el código de entrada">Copiar</button></div><div class="sal"><div class="celda"><div class="pr po" data-o></div><div class="cod" data-salida></div></div></div></div>
+<details><summary>Alternativas descartadas por ahora: VS Code y Colab</summary>
+<div class="fila f2" style="margin-top:14px">
+  <div><h3>VS Code (tema claro)</h3><div class="nb vs"><div class="rot">grados_hora.ipynb · Python 3.12</div><div class="celda"><div class="pr" data-p></div><div class="cod" data-codigo></div></div><div class="sal"><div class="celda"><div class="pr"></div><div class="cod" data-salida></div></div></div></div></div>
+  <div><h3>Google Colab</h3><div class="nb co"><div class="rot">Untitled0.ipynb</div><div class="celda"><div class="pr" data-p></div><div class="cod" data-codigo></div></div><div class="sal"><div class="celda"><div class="pr"></div><div class="cod" data-salida></div></div></div></div></div>
+</div></details>
+
+<h2>3 · Archivo en el editor (YAML con número de línea)</h2>
+<div class="ed" style="position:relative"><div class="tab"><span>zona-termica.md</span></div><pre class="mono" id="ed"></pre><button class="cp" data-copiar="ed" title="Copia el archivo sin los números de línea">Copiar</button></div>
+
+<h2>4 · Antes y después (diferencias)</h2>
+<div class="dif" style="position:relative"><div class="t">wiki/concepts/ · de una página por clase a una por concepto</div><pre class="mono"><span class="l x">  type: Concepto</span><span class="l m">- title: Archivo de clima (clase 011)</span><span class="l a">+ title: Archivo EPW</span><span class="l m">- clases: [idb-011]</span><span class="l a">+ clases: [idb-002, idb-011, iee-012]</span><span class="l a">+ aliases: [archivo de clima, weather file]</span><span class="l x">  status: draft</span></pre><button class="cp" data-copiar="dif" title="Copia la versión nueva (contexto y líneas verdes)">Copiar versión nueva</button></div>
+
+<h2>5 · Salida o registro (sin comando)</h2>
+<div class="out mono"><span class="ok">✓</span> 182 páginas · 0 errores · <span class="av">3 avisos</span>
+  <span class="av">AVISO</span> concepts/masa-termica.md: sin enlace entrante
+  <span class="av">AVISO</span> tools/radiance.md: sin enlace entrante</div>
+
+</div></div>
+<script>
+const $=s=>document.querySelector(s), esperar=ms=>new Promise(r=>setTimeout(r,ms));
+let ciclo=0;
+function escalar(){const s=Math.min(1,innerWidth/1280),e=$("#escala");e.style.transform=`scale(${s})`;document.body.style.height=e.offsetHeight*s+"px";}
+addEventListener("resize",escalar);
+
+/* Teclear una lista de [clase, texto] con velocidad por carácter (ms) */
+async function teclear(el,trozos,v,mi){
+  el.innerHTML="";
+  for(const [cl,tx] of trozos){
+    const sp=document.createElement("span"); if(cl)sp.className=cl; el.append(sp);
+    for(const ch of tx){ if(mi!==ciclo)return false; sp.textContent+=ch; await esperar(v); }
+  }
+  return true;
+}
+const guionTerm=[["tp","zeus@mac presentacion-kb-idb % "],["","uv run "],["tf","taller/generar_paleta.py "],["tf","--tono "],["ts","250"],["","\n"],["to","12 temas aceptados, 0 descartados.\n"],["tm","# la galería está en taller/paletas/galeria.html\n"],["tp","zeus@mac presentacion-kb-idb % "]];
+</script>
+<script>
+/* Código del notebook (tokens: k palabra clave, s cadena, n número, c comentario, f función, v nombre, i builtin) */
+const NB=[["k","import"],[""," "],["v","pandas"],[""," "],["k","as"],[""," "],["v","pd"],["","\n\n"],["c","# grados hora de disconfort cálido (Δt = 10 min)\n"],["v","df"],[""," = "],["v","pd"],["","."],["f","read_csv"],["","("],["s","\"simulacion.csv\""],["",")\n"],
+  ["v","gh"],[""," = ("],["v","df"],["","["],["s","\"T_i\""],["","] - "],["n","26"],["",")."],["f","clip"],["","("],["v","lower"],["","="],["n","0"],["",")."],["f","sum"],["","() / "],["n","6"],["","\n"],
+  ["i","print"],["","("],["s","f\"{gh:.1f} grados hora\""],["",")"]];
+const SALIDA="412.7 grados hora";
+const ED=[["c","# wiki/concepts/zona-termica.md\n"],["k","type"],["",": Concepto\n"],["k","title"],["",": Zona térmica\n"],["k","aliases"],["",": ["],["s","zona termica"],["",", "],["s","thermal zone"],["","]\n"],["k","clases"],["",": ["],["n","idb-002"],["",", "],["n","idb-003"],["",", "],["n","iee-003"],["","]\n"],["k","status"],["",": "],["b","draft"]];
+function dibujarEditor(){
+  const t=ED.map(([c,x])=>c?`<span class="${c}">${x.replace(/</g,"&lt;")}</span>`:x).join("");
+  $("#ed").innerHTML=t.split("\n").map((l,i)=>`<span class="ln">${i+1}</span>${l}`).join("\n");
+}
+async function notebook(nb,mi){
+  const cod=nb.querySelector("[data-codigo]"),sal=nb.querySelector(".sal"),pr=nb.querySelector("[data-p]"),pro=nb.querySelector("[data-o]"),res=nb.querySelector("[data-salida]");
+  sal.classList.remove("v"); res.textContent=""; pr.textContent=nb.classList.contains("co")?"▶":"In [ ]:"; if(pro)pro.textContent="";
+  if(!await teclear(cod,NB,18,mi))return;
+  pr.textContent=nb.classList.contains("co")?"◌":"In [*]:"; await esperar(700); if(mi!==ciclo)return;
+  pr.textContent=nb.classList.contains("co")?"▶":"In [1]:"; if(pro)pro.textContent="Out[1]:";
+  res.textContent=SALIDA; sal.classList.add("v");
+}
+async function correr(){
+  const mi=++ciclo;
+  teclear($("#term"),guionTerm,28,mi).then(()=>{ if(mi===ciclo)$("#term").insertAdjacentHTML("beforeend",'<span class="cur"></span>'); });
+  document.querySelectorAll(".nb").forEach(nb=>notebook(nb,mi));
+}
+const ENTRADA={
+  nb:()=>NB.map(x=>x[1]).join(""),
+  term:()=>"uv run taller/generar_paleta.py --tono 250",
+  ed:()=>ED.map(x=>x[1]).join(""),
+  dif:()=>"type: Concepto\ntitle: Archivo EPW\nclases: [idb-002, idb-011, iee-012]\naliases: [archivo de clima, weather file]\nstatus: draft"
+};
+async function copiarTexto(tx){
+  try{ await navigator.clipboard.writeText(tx); }
+  catch(e){ const a=document.createElement("textarea"); a.value=tx; document.body.append(a); a.select(); document.execCommand("copy"); a.remove(); }
+}
+document.querySelectorAll(".cp").forEach(b=>b.addEventListener("click",async()=>{
+  await copiarTexto(ENTRADA[b.dataset.copiar]()); const o=b.textContent; b.textContent="Copiado ✓"; b.classList.add("ok");
+  setTimeout(()=>{b.textContent=o;b.classList.remove("ok");},1600);
+}));
+dibujarEditor(); document.fonts.ready.then(()=>{escalar();correr();});
+</script>
+</body></html>

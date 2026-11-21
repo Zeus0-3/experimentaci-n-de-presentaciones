@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><title>Sorteador de estilo de presentación</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:"Source Serif 4";font-weight:400;src:url(fuentes/source-serif-4-latin-400-normal.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:600;src:url(fuentes/source-serif-4-latin-600-normal.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:700;src:url(fuentes/source-serif-4-latin-700-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:400;src:url(fuentes/source-sans-3-latin-400-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:600;src:url(fuentes/source-sans-3-latin-600-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:700;src:url(fuentes/source-sans-3-latin-700-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:400;src:url(fuentes/jetbrains-mono-latin-400-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:700;src:url(fuentes/jetbrains-mono-latin-700-normal.woff2)}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.45 system-ui;background:#e9eef0;color:#222;display:grid;grid-template-columns:340px 1fr;min-height:100vh}
+aside{background:#fff;padding:1rem 1.1rem;border-right:1px solid #ccd;position:sticky;top:0;height:100vh;overflow:auto}
+aside h1{font-size:1.1rem;margin:.1rem 0 .6rem}aside h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:#556;margin:1.1rem 0 .4rem}
+button{font:inherit;font-weight:600;border:0;background:#009492;color:#fff;border-radius:8px;padding:.5rem .8rem;cursor:pointer;width:100%;margin:.2rem 0}
+button.s{background:#fff;color:#334;border:1px solid #99a}button:disabled{opacity:.45;cursor:not-allowed}
+.chk{display:flex;gap:.5rem;align-items:center;margin:.25rem 0}.chk label{font-weight:600}
+.ficha{font-size:.85rem;color:#445;margin:.2rem 0}.ficha b{color:#111}
+.sw{display:flex;align-items:center;gap:.5rem;font:12px ui-monospace,Menlo,monospace;margin:.15rem 0}.sw i{width:22px;height:22px;border-radius:5px;border:1px solid #0003;display:block;flex:none}
+.rz{margin-left:auto;font:11px system-ui}.ok{color:#176b3a}.mal{color:#b00;font-weight:700}
+details{margin:.4rem 0}summary{cursor:pointer;font-weight:600}pre.css{background:#f3f5f7;border:1px solid #dde;border-radius:6px;padding:.5rem;font:11px/1.4 ui-monospace,Menlo,monospace;white-space:pre-wrap;max-height:220px;overflow:auto}
+.exp{font-size:.82rem;color:#445;background:#f6f8fa;border-left:4px solid #009492;padding:.5rem .7rem;margin:.4rem 0;border-radius:0 6px 6px 0}
+main{padding:1.2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(520px,1fr));gap:1.4rem;align-content:start}
+.marco h3{font:600 .82rem system-ui;margin:0 0 .3rem;color:#445}
+.caja{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border:1px solid #bbc;box-shadow:0 4px 16px #0002}
+
+/* ═══ La lámina: todo sale de TOKENS (variables CSS) ═══ */
+.lam{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:top left;overflow:hidden;
+  background:var(--fondo);color:var(--texto);font:400 29px/1.38 var(--f-cuerpo);padding:60px}
+.lam h1,.lam h2{font-family:var(--f-titulo);font-weight:var(--p-titulo);margin:0;position:relative;z-index:3;letter-spacing:-.01em}
+.lam h2{font-size:56px;line-height:1.1;color:var(--c-titulo);max-width:24ch}
+.lam .sec{font:600 21px var(--f-cuerpo);text-transform:uppercase;letter-spacing:.12em;color:var(--acento);margin-bottom:.5em;position:relative;z-index:3}
+.lam .cuerpo{position:relative;z-index:3;max-width:64ch;margin-top:.55em}
+.lam p{margin:0 0 .5em;text-align:justify;hyphens:auto}
+.lam .pie{position:absolute;left:60px;right:60px;bottom:26px;display:grid;grid-template-columns:1fr auto 1fr;gap:20px;font-size:17px;line-height:1.2;color:var(--suave);z-index:4}
+.lam .pie .c{text-align:center;font-weight:600;color:var(--c-titulo)}.lam .pie .d{text-align:right}
+.lam .nota{display:none}.lam .deco{position:absolute;inset:0;pointer-events:none;z-index:1}
+.lam .fv{position:absolute;inset:0;z-index:1;pointer-events:none;display:none}
+/* viñetas (token: viñeta) */
+.lam ul{list-style:none;margin:.2em 0 0;padding:0;display:grid;gap:9px;position:relative;z-index:3;max-width:48ch}.lam li{font-size:24px;line-height:1.3;margin:0}
+.V-plana li{border:1.5px solid var(--texto);background:color-mix(in srgb,#fff 55%,var(--fondo));padding:.5em .8em;border-radius:6px}
+.V-linea li{padding:.3em 0;border-bottom:1.5px solid color-mix(in srgb,var(--texto) 35%,transparent)}
+.V-barra li{border-left:6px solid var(--terciario);padding:.15em 0 .15em .7em}
+.V-cuadro li{padding-left:1.1em;position:relative}.V-cuadro li:before{content:"";position:absolute;left:0;top:.52em;width:.5em;height:.5em;background:var(--terciario)}
+/* espacios para gráfica y tabla */
+.slot{position:relative;z-index:3;border:2.5px dashed var(--suave);border-radius:6px;display:grid;place-items:center;text-align:center;color:var(--suave);background:color-mix(in srgb,var(--tarjeta) 45%,transparent)}
+.slot b{display:block;font:700 40px var(--f-titulo);color:var(--c-titulo)}.slot small{font-size:22px}
+/* terminal */
+.term{position:relative;z-index:3;background:#0d1117;border-radius:10px;padding:20px 26px;font:400 25px/1.55 "JetBrains Mono",monospace;color:#e6edf3;max-width:900px}
+.term .p{color:#3fb950}.term .f{color:#79c0ff}.term .o{color:#7ee787}.term .m{color:#8b949e}
+/* tipos de lámina */
+.t-seccion{background:var(--principal);color:var(--sobre);padding:60px 90px;display:flex;flex-direction:column;justify-content:center}
+.t-seccion .deco,.t-seccion .fv{display:none}.t-seccion .num{font:700 200px/.9 var(--f-titulo);position:relative;z-index:3}.t-seccion h2{color:var(--sobre);font-size:80px;margin-top:16px;max-width:16ch}.t-seccion .sub{font-size:32px;margin-top:14px;position:relative;z-index:3}
+.t-seccion .pie,.t-seccion .pie .c{color:var(--sobre)}
+.t-portada{padding:0 90px 90px;display:flex;flex-direction:column;justify-content:center}.t-portada h1{font-size:80px;line-height:1.02;color:var(--c-titulo);max-width:14ch}
+.t-portada .raya{width:140px;height:10px;background:var(--acento);margin-bottom:40px;position:relative;z-index:3}.t-portada .sub{font:400 32px/1.25 var(--f-titulo);color:var(--suave);margin-top:20px;max-width:34ch;position:relative;z-index:3}
+.t-portada .aut{position:absolute;left:90px;bottom:40px;font-size:26px;z-index:3}.t-portada .aut small{display:block;font-size:20px;color:var(--suave)}
+.t-cifra .gran{font:700 220px/1 var(--f-titulo);color:var(--principal);position:relative;z-index:3}.t-cifra .cita{font:italic 400 36px/1.3 var(--f-titulo);max-width:30ch;position:relative;z-index:3;margin-top:.1em}
+/* ═══ ESTILOS BASE (token: estilo) ═══ */
+.E1:before{content:"";position:absolute;left:0;right:0;top:0;height:14px;background:var(--principal);z-index:2}.E1{--f-titulo:var(--f-cuerpo);--p-titulo:700;--c-titulo:var(--texto)}.E1 h2{letter-spacing:-.025em}
+.E3 .deco{border-top:5px solid var(--texto);border-bottom:1px solid var(--texto);height:7px;inset:40px 60px auto 60px}.E3{padding-top:84px}.E3 .sec{letter-spacing:.2em}
+.E4{--f-cuerpo:"Source Serif 4",serif}.E4 .cuerpo{max-width:58%}.E4 h2{font-style:italic;font-weight:600;--c-titulo:var(--texto)}.E4 .nota{display:block;position:absolute;right:60px;top:290px;width:25%;font:400 20px/1.4 "Source Sans 3";color:var(--suave);border-top:1px solid var(--borde);padding-top:.5em;z-index:3}
+.E9{background-image:repeating-linear-gradient(transparent 0 37px,color-mix(in srgb,var(--principal) 22%,transparent) 37px 38px);background-position:0 20px;padding-left:130px}.E9 .deco{border-left:3px solid var(--acento);inset:0 auto 0 100px;width:0;opacity:.6}.E9 h2{text-decoration:underline;text-decoration-color:var(--acento);text-underline-offset:10px;text-decoration-thickness:3px}.E9 .pie{left:130px}
+.E10{background-image:linear-gradient(#ffffff1c 1px,transparent 1px),linear-gradient(90deg,#ffffff1c 1px,transparent 1px);background-size:40px 40px;--f-titulo:"JetBrains Mono",monospace}.E10 .deco{border:2px solid #ffffffaa;inset:28px}.E10 h2{font-size:46px}.E10 p{text-align:left}
+.E11 .deco{inset:0 auto auto 60px;width:84px;height:12px;background:var(--principal)}.E11{padding-top:76px;--c-titulo:var(--texto)}.E11 .sec{color:var(--principal)}
+.E13 .slot{border-style:solid;border-width:1.5px;border-color:var(--texto);border-radius:0}.E13 li{border-radius:0}
+.E15{background-color:color-mix(in srgb,var(--fondo) 80%,#f1e6cf)}.E15:before{content:"";position:absolute;inset:0;opacity:.35;z-index:2;pointer-events:none;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
+.E15 .deco{background:radial-gradient(ellipse at 90% 12%,var(--acento) 0 120px,transparent 121px),radial-gradient(ellipse at 84% 18%,var(--principal) 0 120px,transparent 121px);mix-blend-mode:multiply;opacity:.7}.E15 h2{text-shadow:3px 3px 0 color-mix(in srgb,var(--acento) 55%,transparent)}
+.E16 h2{display:inline-block;background:var(--acento);color:var(--fondo);padding:.1em .3em;border:4px solid var(--texto);box-shadow:8px 8px 0 var(--texto)}.E16 .slot{border:4px solid var(--texto);box-shadow:8px 8px 0 var(--texto);border-radius:0;background:#fff;color:#111}.E16 li{border-radius:0;border:3px solid var(--texto)}
+.E17 .deco{background:radial-gradient(circle at 90% 10%,var(--acento) 0 70px,transparent 71px),linear-gradient(var(--principal),var(--principal)) 80% 14%/110px 110px no-repeat,linear-gradient(var(--terciario),var(--terciario)) 96% 0/10px 40% no-repeat}.E17{--f-titulo:var(--f-cuerpo);--p-titulo:700;--c-titulo:var(--texto)}.E17 h2{text-transform:uppercase;letter-spacing:-.02em}
+.E19 .deco{background:radial-gradient(circle,var(--acento) 0 6px,transparent 7px) 0 0/44px 44px,repeating-linear-gradient(45deg,var(--terciario) 0 5px,transparent 5px 18px) 55% 30%/150px 90px no-repeat;opacity:.5;inset:30px 30px auto 72%;height:44%}.E19{--c-titulo:var(--texto)}.E19 .cuerpo{max-width:46ch}.E19 h2{max-width:16ch}
+</style>
+<body>
+<aside>
+  <h1>Sorteador de estilo</h1>
+  <div class="exp"><b>¿Qué es un token?</b> Un valor de diseño con nombre: en vez de escribir <code>#009492</code> en cada diapositiva, se llama <code>--principal</code>. Aquí se <b>sortean una sola vez</b> y las 8 diapositivas heredan los mismos: no cambian de color ni de letra a mitad de la charla.</div>
+  <button id="sortear" onclick="sortear()">🎲 Sortear estilo</button>
+  <div class="chk"><input id="fp" type="checkbox"><label for="fp">Fijar paleta</label></div>
+  <div class="chk"><input id="fe" type="checkbox"><label for="fe">Fijar estilo base</label></div>
+  <div class="chk"><input id="fv" type="checkbox"><label for="fv">Fijar viñeta</label></div>
+  <button class="s" id="bloq" onclick="bloquear()">🔒 Bloquear todo (decidido)</button>
+  <button class="s" onclick="compartir()">Copiar enlace de este estilo</button>
+  <div class="chk"><label>Perfil de color</label><select id="perfil" style="margin-left:auto;font:inherit"><option value="min">Mínimo (apagado)</option><option value="exp">Expresivo</option></select></div>
+  <div class="chk"><button style="background:#2c7a4b" onclick="votar(1)">👍 Me gusta</button><button style="background:#a33" onclick="votar(0)">👎 No</button></div>
+  <div class="chk"><label>Modo</label><select id="modo" style="margin-left:auto;font:inherit"><option value="claro">Claro</option><option value="oscuro">Oscuro</option></select></div>
+
+  <h3>Lo que salió</h3>
+  <div class="ficha">Paleta: <b id="fpal"></b></div><div class="ficha">Estilo base: <b id="fest"></b></div><div class="ficha">Viñeta: <b id="fvin"></b></div><div class="ficha">Letras: <b>Source Serif 4 · Source Sans 3 · JetBrains Mono</b> <span id="fnota"></span></div>
+  <h3>Tokens de color (con contraste)</h3><div id="sw"></div>
+  <details><summary>Tokens como CSS (para copiar)</summary><button class="s" onclick="copiarCss()">Copiar CSS</button><pre class="css" id="css"></pre></details>
+  <details><summary>Calibración con tus votos</summary><div id="cal" class="ficha"></div><button class="s" onclick="copiarCal()">Copiar resumen</button><button class="s" onclick="borrarVotos()">Borrar votos</button></details>
+  <p class="ficha">Semilla: <b id="sem"></b>. El mismo enlace da siempre el mismo estilo.</p>
+</aside>
+<main id="m"></main>
+<script>
+const $=id=>document.getElementById(id);
+/* ───── color OKLCH ↔ sRGB y contraste (igual que generar_paleta.py) ───── */
+const gam=c=>{c=Math.min(1,Math.max(0,c));return c<=.0031308?12.92*c:1.055*c**(1/2.4)-.055};
+function lin(L,C,h){const a=C*Math.cos(h*Math.PI/180),b=C*Math.sin(h*Math.PI/180),l_=L+.3963377774*a+.2158037573*b,m_=L-.1055613458*a-.0638541728*b,s_=L-.0894841775*a-1.291485548*b,l=l_**3,m=m_**3,s=s_**3;return[4.0767416621*l-3.3077115913*m+.2309699292*s,-1.2684380046*l+2.6097574011*m-.3413193965*s,-.0041960863*l-.7034186147*m+1.707614701*s]}
+const en=r=>r.every(c=>c>=-.0005&&c<=1.0005);
+function col(L,C,h){let lo=0,hi=C,r=lin(L,hi,h),used=C;if(!en(r)){for(let i=0;i<24;i++){const m=(lo+hi)/2;if(en(lin(L,m,h)))lo=m;else hi=m}r=lin(L,lo,h);used=lo}
+  return{lost:C>0?(C-used)/C:0,C:used,hex:"#"+r.map(c=>Math.round(gam(c)*255).toString(16).padStart(2,"0")).join(""),rgb:r.map(c=>Math.min(1,Math.max(0,c)))}}
+const Y=r=>.2126*r[0]+.7152*r[1]+.0722*r[2],CR=(a,b)=>{const x=Y(a),y=Y(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+function mulberry(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const REG={"texto/fondo":7,"suave/fondo":4.5,"principal/fondo":3,"acento/fondo":4.5,"principal/tarjeta":3,"acento/tarjeta":4.5,"borde/fondo":1.15,"terciario/fondo":3};
+/* armonía = dónde cae el acento y el tercer color respecto al tono principal */
+const ARM=[["complementaria",180,90],["análoga",30,-30],["triádica",120,240],["complementaria dividida",150,210],["monocromática",0,0],["tetrádica",90,180]];
+const INT=[["suave",.62],["media",1],["viva",1.3]];
+const NEU=[["tintados",null],["cálidos",75],["fríos",245],["casi blancos",null]];
+function armarExp(h,claro,rng){const j=(a,b)=>a+(b-a)*rng(),pick=a=>a[Math.floor(rng()*a.length)];
+  const arm=pick(ARM),inten=pick(INT),neu=pick(NEU),hn=neu[1]===null?h:neu[1],cn=neu[0]==="casi blancos"?.35:1;
+  const ha=(h+arm[1])%360,ht=(h+arm[2]+360)%360;
+  for(let n=0;n<1200;n++){const Lp=claro?j(.5,.68):j(.66,.84),La=claro?j(.46,.6):j(.72,.86),Lt=claro?j(.5,.66):j(.7,.86),s=inten[1];
+    const t={fondo:col(claro?j(.975,.993):j(.15,.2),j(.006,.02)*cn,hn),tarjeta:col(claro?j(.94,.965):j(.21,.26),j(.015,.04)*cn,hn),borde:col(claro?j(.86,.91):j(.3,.36),j(.02,.05)*cn,hn),texto:col(claro?j(.18,.27):j(.93,.97),j(.01,.04)*cn,hn),suave:col(claro?j(.4,.5):j(.74,.82),j(.02,.05)*cn,hn),
+      principal:col(Lp,Math.min(.27,j(.12,.22)*s),h),acento:col(La,Math.min(.27,j(.12,.24)*s),ha),terciario:col(Lt,Math.min(.25,j(.1,.2)*s),ht)};
+    const r={"texto/fondo":CR(t.texto.rgb,t.fondo.rgb),"suave/fondo":CR(t.suave.rgb,t.fondo.rgb),"principal/fondo":CR(t.principal.rgb,t.fondo.rgb),"acento/fondo":CR(t.acento.rgb,t.fondo.rgb),"principal/tarjeta":CR(t.principal.rgb,t.tarjeta.rgb),"acento/tarjeta":CR(t.acento.rgb,t.tarjeta.rgb),"borde/fondo":CR(t.borde.rgb,t.fondo.rgb),"terciario/fondo":CR(t.terciario.rgb,t.fondo.rgb)};
+    if(Object.keys(REG).every(k=>r[k]>=REG[k])&&Math.abs(La-Lp)>=.08&&Math.max(CR(t.fondo.rgb,t.principal.rgb),CR(t.texto.rgb,t.principal.rgb))>=4.5)
+      return{c:Object.fromEntries(Object.entries(t).map(([k,v])=>[k,v.hex])),r,rgb:Object.fromEntries(Object.entries(t).map(([k,v])=>[k,v.rgb])),meta:{armonia:arm[0],inten:inten[0],neutros:neu[0],ha,ht}}}
+  return null}
+/* ───── perfil MÍNIMO (derivado de la paleta favorita de Zeus) ───── */
+const labOf=r=>{const l=Math.cbrt(.4122214708*r[0]+.5363325363*r[1]+.0514459929*r[2]),m=Math.cbrt(.2119034982*r[0]+.6806995451*r[1]+.1073969566*r[2]),s=Math.cbrt(.0883024619*r[0]+.2817188376*r[1]+.6299787005*r[2]);return[.2104542553*l+.793617785*m-.0040720468*s,1.9779984951*l-2.428592205*m+.4505937099*s,.0259040371*l+.7827717662*m-.808675766*s]};
+const dE=(a,b)=>{const x=labOf(a),y=labOf(b);return Math.hypot(x[0]-y[0],x[1]-y[1],x[2]-y[2])};
+const ARMM=[["triádica exacta",8,(j)=>[120+j(-8,8),240+j(-8,8)]],["complementaria dividida",6,(j)=>[150+j(-6,6),210+j(-6,6)]],["complementaria",0,()=>[180,0]],["análoga",0,()=>[20,-20]],["monocromática",0,()=>[0,0]]];
+const NIV={normal:{p:[.06,.10],a:[.10,.14],t:[.07,.10],tot:.32},apagado:{p:[.04,.065],a:[.065,.09],t:[.045,.065],tot:.20}};
+function armarMin(h,claro,rng,nivel){const j=(a,b)=>a+(b-a)*rng(),arm=ARMM[Math.floor(rng()*ARMM.length)],nv=NIV[nivel]||NIV.normal;
+  const [oa,ot]=arm[2](j),ha=(h+oa+360)%360,ht=(h+ot+360)%360,comp=arm[0]==="complementaria";
+  for(let n=0;n<1500;n++){
+    const fam=arm[0]==='análoga'||arm[0]==='monocromática'||comp,Lp=claro?(fam?j(.56,.62):j(.58,.66)):j(.66,.76),La=claro?(fam?j(.42,.48):j(.46,.56)):j(.77,.86),Lt=claro?(fam?j(.64,.67):j(.58,.66)):(fam?j(.62,.68):j(.66,.78));
+    const Cp=j(...nv.p),Ca=j(...nv.a),Ct=comp?j(.03,.05)*(nivel==="apagado"?.62:1):j(...nv.t);
+    if(Cp+Ca+Ct>nv.tot)continue;
+    const t={fondo:col(claro?j(.982,.992):j(.15,.2),j(.004,.012),h),tarjeta:col(claro?j(.94,.955):j(.21,.26),j(.015,.035),h),borde:col(claro?j(.89,.915):j(.3,.36),j(.02,.035),h),texto:col(claro?j(.18,.25):j(.93,.97),j(.01,.035),h),suave:col(claro?j(.4,.46):j(.74,.82),j(.02,.04),h),
+      principal:col(Lp,Cp,h),acento:col(La,Ca,ha),terciario:col(Lt,Ct,ht)};
+    if(["principal","acento","terciario"].some(k=>t[k].lost>.12))continue;                       // color «sucio»: no cabe en sRGB sin perder viveza
+    const umbral=fam?.08:(nivel==='apagado'?.10:.12);if(dE(t.principal.rgb,t.acento.rgb)<umbral||dE(t.principal.rgb,t.terciario.rgb)<umbral||dE(t.acento.rgb,t.terciario.rgb)<umbral)continue;   // las voces deben distinguirse
+    const r={"texto/fondo":CR(t.texto.rgb,t.fondo.rgb),"suave/fondo":CR(t.suave.rgb,t.fondo.rgb),"principal/fondo":CR(t.principal.rgb,t.fondo.rgb),"acento/fondo":CR(t.acento.rgb,t.fondo.rgb),"principal/tarjeta":CR(t.principal.rgb,t.tarjeta.rgb),"acento/tarjeta":CR(t.acento.rgb,t.tarjeta.rgb),"borde/fondo":CR(t.borde.rgb,t.fondo.rgb),"terciario/fondo":CR(t.terciario.rgb,t.fondo.rgb)};
+    if(Object.keys(REG).every(k=>r[k]>=REG[k])&&Math.abs(La-Lp)>=.08&&Math.max(CR(t.fondo.rgb,t.principal.rgb),CR(t.texto.rgb,t.principal.rgb))>=4.5)
+      return{c:Object.fromEntries(Object.entries(t).map(([k,v])=>[k,v.hex])),r,rgb:Object.fromEntries(Object.entries(t).map(([k,v])=>[k,v.rgb])),croma:{p:t.principal.C,a:t.acento.C,t:t.terciario.C},meta:{armonia:arm[0],inten:nivel==="apagado"?"más apagado":"normal",neutros:"tintados con el principal",ha,ht}}}
+  return null}
+function armar(h,claro,rng,perfil,nivel){return perfil==="exp"?armarExp(h,claro,rng):armarMin(h,claro,rng,nivel)}
+const NT=[[29,"rojo"],[55,"naranja"],[85,"ámbar"],[105,"amarillo"],[127,"lima"],[150,"verde"],[180,"turquesa"],[210,"cian"],[250,"azul"],[275,"índigo"],[300,"violeta"],[330,"magenta"],[355,"rosa"],[360,"rojo"]];
+const tono=h=>NT.reduce((a,b)=>Math.min(Math.abs(a[0]-h),360-Math.abs(a[0]-h))<=Math.min(Math.abs(b[0]-h),360-Math.abs(b[0]-h))?a:b)[1];
+/* ───── catálogos (solo lo que te gustó) ───── */
+const ESTILOS=[[1,"Suizo / Internacional"],[3,"Editorial / revista"],[4,"Estilo Tufte"],[9,"Cuaderno de laboratorio"],[10,"Plano técnico (blueprint)"],[11,"Periodismo de datos"],[13,"Bento grid plano"],[15,"Risografía / papel"],[16,"Neobrutalismo"],[17,"Bauhaus"],[19,"Memphis"]];
+const VINETAS={plana:"Plana (bento)",linea:"Línea fina",barra:"Barra lateral",cuadro:"Marcador cuadrado"};
+const COMPAT={1:["plana","linea","barra","cuadro"],3:["linea","barra","cuadro"],4:["linea","cuadro"],9:["linea","cuadro"],10:["plana","linea"],11:["linea","barra","plana"],13:["plana"],15:["plana","linea"],16:["plana"],17:["plana","barra","cuadro"],19:["linea","cuadro"]};
+const FONT_NOTA={1:"(títulos en sans, propio del estilo)",10:"(títulos en mono, propio del estilo)",17:"(títulos en sans, propio del estilo)",4:"(cuerpo en serif, propio del estilo)"};
+/* ───── estado ───── */
+let S={p:1,e:3,v:"linea",lock:false,pf:"min",nv:"normal"};
+function leerHash(){const q=new URLSearchParams(location.hash.slice(1));if(q.has("p")){S.p=+q.get("p");S.e=+q.get("e");S.v=q.get("v");S.lock=q.get("b")==="1";S.pf=q.get("pf")||"min";S.nv=q.get("nv")||"normal";}else S={p:Math.floor(Math.random()*1e6),e:ESTILOS[Math.floor(Math.random()*ESTILOS.length)][0],v:"linea",lock:false,pf:"min",nv:Math.random()<.5?"normal":"apagado"},S.v=COMPAT[S.e][Math.floor(Math.random()*COMPAT[S.e].length)]}
+function guardar(){location.hash=`p=${S.p}&e=${S.e}&v=${S.v}&b=${S.lock?1:0}&pf=${S.pf}&nv=${S.nv}`}
+function sortear(){if(S.lock)return;S.pf=$("perfil").value;if(!$("fp").checked){S.nv=Math.random()<.5?"normal":"apagado";for(let i=0;i<40;i++){S.p=Math.floor(Math.random()*1e6);const hu=mulberry(S.p)()*360;if(armar(hu,$("modo").value==="claro"&&S.e!==10,mulberry(S.p+7),S.pf,S.nv))break}}
+  if(!$("fe").checked)S.e=ESTILOS[Math.floor(Math.random()*ESTILOS.length)][0];
+  if(!$("fv").checked||!COMPAT[S.e].includes(S.v))S.v=COMPAT[S.e][Math.floor(Math.random()*COMPAT[S.e].length)];guardar();pintar();}
+function bloquear(){S.lock=!S.lock;guardar();pintar();}
+function compartir(){navigator.clipboard.writeText(location.href).then(()=>alert("Enlace copiado:\n"+location.href))}
+/* ───── láminas con texto genérico ───── */
+const PIE=n=>`<div class="pie"><span>Título corto · Autoría · Institución</span><span class="c">Sección actual</span><span class="d">${n} / 8</span></div>`;
+const UL=`<ul><li>Primera idea de apoyo, en una línea.</li><li>Segunda idea, también breve.</li><li>Tercera idea con su fuente.</li></ul>`;
+const LAM=[
+ n=>`<div class="lam t-portada"><div class="deco"></div><div class="raya"></div><h1>Título que afirma una idea central</h1><div class="sub">Subtítulo que explica de qué trata la presentación</div><div class="aut">Nombre de la persona<small>Institución · Fecha</small></div></div>`,
+ n=>`<div class="lam t-seccion"><div class="num">01</div><h2>Nombre de la sección</h2><div class="sub">Una frase que anuncia lo que sigue</div>${PIE(2)}</div>`,
+ n=>`<div class="lam"><div class="deco"></div><div class="fv"></div><div class="sec">01 · Sección</div><h2>La idea de esta diapositiva, dicha completa</h2><div class="cuerpo"><p>Texto genérico de apunte: un párrafo que explica la idea con claridad, justificado y con guiones, donde cada afirmación llevaría su fuente. <b>Una palabra clave</b> en negritas.</p>${UL}</div><div class="nota">1 Nota al margen de ejemplo.</div>${PIE(3)}</div>`,
+ n=>`<div class="lam"><div class="deco"></div><div class="fv"></div><div class="sec">01 · Sección</div><h2>Lo que muestra la gráfica, en una frase</h2><div class="slot" style="height:350px;margin-top:22px"><div><b>AQUÍ IRÁ LA GRÁFICA</b><small>Serie de tiempo · ancho completo · con la fuente debajo</small></div></div>${PIE(4)}</div>`,
+ n=>`<div class="lam"><div class="deco"></div><div class="fv"></div><div class="sec">01 · Sección</div><h2>Lo que concluye la tabla, en una frase</h2><div class="slot" style="height:350px;margin-top:22px"><div><b>AQUÍ IRÁ LA TABLA</b><small>4 columnas · 5 filas · alineada a la izquierda</small></div></div>${PIE(5)}</div>`,
+ n=>`<div class="lam"><div class="deco"></div><div class="sec">02 · Código</div><h2>El comando o el código, explicado</h2><div class="term" style="margin-top:30px"><span class="p">zeus@mac proyecto % </span>uv run <span class="f">script.py</span> <span class="f">--opcion</span> 5<br><span class="o">12 resultados · 0 errores</span><br><span class="m"># comentario de ejemplo</span><br><span class="p">zeus@mac proyecto % </span></div>${PIE(6)}</div>`,
+ n=>`<div class="lam t-cifra"><div class="deco"></div><div class="sec">03 · Resultado</div><div class="gran">182</div><div class="cita">Una cifra grande y una frase que la interpreta.</div>${PIE(7)}</div>`,
+ n=>`<div class="lam t-portada"><div class="deco"></div><div class="raya"></div><h1>Gracias</h1><div class="sub">Preguntas, comentarios y enlaces</div><div class="aut">contacto@ejemplo.mx<small>Repositorio · QR</small></div></div>`];
+function lum2(h){return Y(h)}
+function pintar(){
+  const claro=$("modo").value==="claro"&&S.e!==10;
+  const h=mulberry(S.p)()*360, P=armar(h,claro,mulberry(S.p+7),S.pf,S.nv);
+  if(!P){$("m").innerHTML="<p>Ese tono no cumplió las reglas de contraste. Sortea otra vez.</p>";return}
+  const c=P.c, rf=CR(P.rgb.fondo,P.rgb.principal), rt=CR(P.rgb.texto,P.rgb.principal), sobre=rf>=rt?c.fondo:c.texto;
+  const css=Object.entries(c).map(([k,v])=>`--${k}:${v};`).join(" ")+` --sobre:${sobre}; --f-titulo:"Source Serif 4",serif; --f-cuerpo:"Source Sans 3",sans-serif; --p-titulo:700; --c-titulo:${c.principal};`;
+  $("m").innerHTML=LAM.map((f,i)=>`<div class="marco"><h3>${i+1} · ${["Portada","Sección","Contenido con viñetas","Gráfica (espacio)","Tabla (espacio)","Código","Cifra","Cierre"][i]}</h3><div class="caja">${f(i+1).replace('class="lam','class="lam E'+S.e+' V-'+S.v+'').replace('<div class="lam ','<div class="lam ')}</div></div>`).join("");
+  document.querySelectorAll(".lam").forEach(l=>l.setAttribute("style",css));
+  document.body.style.background=$("modo").value==="claro"?"#e9eef0":"#2a2e33";
+  $("fpal").textContent=`${tono(h)} (${h.toFixed(0)}°) · armonía ${P.meta.armonia} · color ${P.meta.inten} · neutros ${P.meta.neutros}`;
+  $("fest").textContent=ESTILOS.find(x=>x[0]===S.e)[1];$("fvin").textContent=VINETAS[S.v];$("fnota").textContent=(FONT_NOTA[S.e]||"")+(S.e===10?" · este estilo usa la paleta oscura":"");$("sem").textContent=`${S.p}-${S.e}-${S.v}-${S.pf}-${S.nv}`;$("perfil").value=S.pf;calPanel();
+  $("sw").innerHTML=Object.entries(c).map(([k,v])=>{const par=Object.keys(P.r).find(x=>x.startsWith(k+"/"));const r=par?P.r[par]:null;
+    return `<div class="sw"><i style="background:${v}"></i>--${k} <span>${v}</span>${r?`<span class="rz ${r>=REG[par]?"ok":"mal"}">${par.split("/")[1]} ${r.toFixed(1)}:1</span>`:""}</div>`}).join("")+`<div class="sw"><i style="background:${sobre}"></i>--sobre <span>${sobre}</span><span class="rz ${Math.max(rf,rt)>=4.5?"ok":"mal"}">sobre principal ${Math.max(rf,rt).toFixed(1)}:1</span></div>`;
+  $("css").textContent=`:root{\n  ${css.replace(/; /g,";\n  ")}\n}\n/* estilo base: ${ESTILOS.find(x=>x[0]===S.e)[1]} · viñeta: ${VINETAS[S.v]} */`;
+  $("sortear").disabled=S.lock;$("bloq").textContent=S.lock?"🔓 Desbloquear":"🔒 Bloquear todo (decidido)";
+  escalar();
+}
+/* ───── calibración: tus 👍/👎 se guardan solo en este navegador ───── */
+const KV="estiloVotos";const leerV=()=>{try{return JSON.parse(localStorage.getItem(KV)||"[]")}catch(e){return[]}};
+function votar(ok){const claro=$("modo").value==="claro"&&S.e!==10,h=mulberry(S.p)()*360,P=armar(h,claro,mulberry(S.p+7),S.pf,S.nv);if(!P)return;
+  const c=n=>{const x=P.rgb[n];const l=labOf(x);return{hex:P.c[n],C:+Math.hypot(l[1],l[2]).toFixed(3),L:+l[0].toFixed(3)}};
+  const v=leerV();v.push({ok,t:Date.now(),p:S.p,e:S.e,v:S.v,pf:S.pf,nv:S.nv,arm:P.meta.armonia,tono:+h.toFixed(0),principal:c("principal"),acento:c("acento"),terciario:c("terciario")});
+  try{localStorage.setItem(KV,JSON.stringify(v))}catch(e){alert("El navegador no deja guardar votos aquí (modo privado).")}calPanel();}
+const med=a=>a.length?(a.reduce((x,y)=>x+y,0)/a.length).toFixed(3):"—";
+function resumenCal(){const v=leerV(),si=v.filter(x=>x.ok),no=v.filter(x=>!x.ok),cnt=(a,k)=>a.reduce((o,x)=>(o[x[k]]=(o[x[k]]||0)+1,o),{});
+  const tot=a=>a.map(x=>x.principal.C+x.acento.C+x.terciario.C);
+  return `Votos: ${si.length} 👍 · ${no.length} 👎\nCroma total medio — 👍 ${med(tot(si))} · 👎 ${med(tot(no))}\nCroma principal medio — 👍 ${med(si.map(x=>x.principal.C))} · 👎 ${med(no.map(x=>x.principal.C))}\nCroma acento medio — 👍 ${med(si.map(x=>x.acento.C))} · 👎 ${med(no.map(x=>x.acento.C))}\nArmonías 👍 ${JSON.stringify(cnt(si,"arm"))}\nArmonías 👎 ${JSON.stringify(cnt(no,"arm"))}\nEstilos 👍 ${JSON.stringify(cnt(si,"e"))} · 👎 ${JSON.stringify(cnt(no,"e"))}\nViñetas 👍 ${JSON.stringify(cnt(si,"v"))} · 👎 ${JSON.stringify(cnt(no,"v"))}\nNiveles 👍 ${JSON.stringify(cnt(si,"nv"))} · 👎 ${JSON.stringify(cnt(no,"nv"))}\nSemillas 👍 ${si.map(x=>x.p+"/"+x.e+"/"+x.v).join(", ")}`;}
+function calPanel(){$("cal").innerHTML=resumenCal().replace(/\n/g,"<br>")}
+function copiarCal(){navigator.clipboard.writeText(resumenCal()).then(()=>alert("Resumen copiado"))}
+function borrarVotos(){if(confirm("¿Borrar todos tus votos de este navegador?")){localStorage.removeItem(KV);calPanel()}}
+function copiarCss(){navigator.clipboard.writeText($("css").textContent).then(()=>alert("CSS copiado"))}
+function escalar(){document.querySelectorAll(".lam").forEach(l=>{l.style.transform=`scale(${l.parentElement.clientWidth/1280})`})}
+$("modo").onchange=pintar;$("perfil").onchange=()=>{S.pf=$("perfil").value;guardar();pintar()};addEventListener("resize",escalar);addEventListener("hashchange",()=>{leerHash();pintar()});
+leerHash();guardar();document.fonts.ready.then(pintar);pintar();
+</script></html>

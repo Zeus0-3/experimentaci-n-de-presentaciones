@@ -1,0 +1,35 @@
+// Tema «naranja-54» · tono 54.3 · acento 234.3 (complementario)
+// Generado por generar_paleta.py; no editar a mano.
+$fondo-claro: #fffaf7;
+$tarjeta-claro: #f7ebe4;
+$borde-claro: #eddcd2;
+$texto-claro: #231912;
+$suave-claro: #624a3a;
+$principal-claro: #d06a00;
+$acento-claro: #00739f;
+$fondo-oscuro: #191512;
+$tarjeta-oscuro: #2a1a10;
+$borde-oscuro: #46372e;
+$texto-oscuro: #f5e9e1;
+$suave-oscuro: #c7b0a1;
+$principal-oscuro: #e27300;
+$acento-oscuro: #32beff;
+
+:root {
+  --fondo: #fffaf7;
+  --tarjeta: #f7ebe4;
+  --borde: #eddcd2;
+  --texto: #231912;
+  --suave: #624a3a;
+  --principal: #d06a00;
+  --acento: #00739f;
+}
+:root.oscuro {
+  --fondo: #191512;
+  --tarjeta: #2a1a10;
+  --borde: #46372e;
+  --texto: #f5e9e1;
+  --suave: #c7b0a1;
+  --principal: #e27300;
+  --acento: #32beff;
+}

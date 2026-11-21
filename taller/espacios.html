@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><title>Taller de tamaño y espacios</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:"Source Serif 4";font-weight:400;src:url(fuentes/source-serif-4-latin-400-normal.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:600;src:url(fuentes/source-serif-4-latin-600-normal.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:700;src:url(fuentes/source-serif-4-latin-700-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:400;src:url(fuentes/source-sans-3-latin-400-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:600;src:url(fuentes/source-sans-3-latin-600-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:700;src:url(fuentes/source-sans-3-latin-700-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:400;src:url(fuentes/jetbrains-mono-latin-400-normal.woff2)}
+:root{--fondo:#f5fdfd;--tarjeta:#def2f1;--borde:#b1dedc;--texto:#122020;--suave:#2e5b5a;--principal:#009492;--acento:#aa394e}
+body{margin:0;font:15px system-ui;background:#e9eef0;color:#222;display:grid;grid-template-columns:320px 1fr;min-height:100vh}
+aside{background:#fff;padding:1rem 1.1rem;border-right:1px solid #ccd;position:sticky;top:0;height:100vh;overflow:auto}
+aside h1{font-size:1.05rem;margin:.2rem 0 .8rem}
+label{display:block;margin:.6rem 0 .1rem;font-weight:600;font-size:.85rem}
+label span{float:right;font-weight:400;color:#556}
+input[type=range]{width:100%}
+.chk{display:flex;gap:.5rem;align-items:center;margin:.5rem 0;font-weight:600;font-size:.85rem}
+button{border:0;background:#009492;color:#fff;border-radius:8px;padding:.5rem .8rem;font-weight:600;cursor:pointer;margin-top:.8rem;width:100%}
+#estado{margin:.7rem 0;padding:.4rem .6rem;border-radius:6px;font-weight:600;font-size:.85rem}
+.ok{background:#e1f5e9;color:#176b3a}.mal{background:#fde7e7;color:#a11}
+main{padding:1.2rem;display:flex;flex-direction:column;gap:1rem;align-items:center}
+#caja{width:100%;max-width:1100px}
+#escala{transform-origin:top left}
+/* ─ la diapositiva (1280×720) ─ */
+.lamina{width:1280px;height:720px;background:var(--fondo);color:var(--texto);position:relative;overflow:hidden;
+  font-family:"Source Sans 3",sans-serif;font-size:var(--cuerpo);line-height:var(--interlineado);padding:var(--margen);box-sizing:border-box;
+  box-shadow:0 6px 24px #0003}
+.lamina h2{font:700 var(--tit) "Source Serif 4",serif;color:var(--principal);margin:0 0 .15em;line-height:1.1;letter-spacing:-.01em}
+.lamina .sub{font-family:"Source Serif 4";font-style:normal;color:var(--suave);font-size:1.05em;margin:0 0 .8em}
+.lamina .col{max-width:var(--ancho);}
+.lamina p{margin:0 0 var(--parrafo);text-align:var(--alin);hyphens:var(--guiones);-webkit-hyphens:var(--guiones)}
+.lamina ul{margin:0 0 var(--parrafo);padding-left:1.2em}
+.lamina li{margin:0 0 .25em;text-align:left}
+.lamina b{font-weight:700}
+.lamina .tarj{background:var(--tarjeta);border-left:6px solid var(--principal);border-radius:8px;padding:.5em .8em;font-size:.88em;margin:.4em 0;max-width:var(--ancho)}
+.lamina table{border-collapse:collapse;font-size:.82em;margin:.2em 0}
+.lamina th{background:var(--tarjeta);text-align:left;padding:.25em .7em;border:1px solid var(--borde);font-weight:600}
+.lamina td{padding:.25em .7em;border:1px solid var(--borde)}
+.lamina code{font-family:"JetBrains Mono";font-size:.82em;background:var(--tarjeta);padding:.05em .3em;border-radius:4px}
+.lamina footer{position:absolute;left:var(--margen);right:var(--margen);bottom:22px;font-size:.5em;color:var(--suave);display:flex;justify-content:space-between}
+.guia{position:absolute;inset:var(--margen);border:1px dashed #0094924d;pointer-events:none;display:none}
+</style>
+<body>
+<aside>
+  <h1>Tamaño y espacios</h1>
+  <p style="margin:0 0 .5rem;color:#556;font-size:.8rem">Títulos: Source Serif 4 · Cuerpo: Source Sans 3. La lámina es de 1280×720 como la presentación real; la ves reducida.</p>
+  <label>Tamaño del cuerpo <span id="vc"></span></label><input id="cuerpo" type="range" min="20" max="40" value="28">
+  <label>Tamaño del título <span id="vt"></span></label><input id="tit" type="range" min="36" max="84" value="56">
+  <label>Interlineado <span id="vi"></span></label><input id="interlineado" type="range" min="1.2" max="1.8" step="0.01" value="1.45">
+  <label>Ancho del texto (caracteres) <span id="va"></span></label><input id="ancho" type="range" min="40" max="95" value="64">
+  <label>Espacio entre párrafos <span id="vp"></span></label><input id="parrafo" type="range" min="0" max="1.2" step="0.05" value="0.55">
+  <label>Margen de la lámina <span id="vm"></span></label><input id="margen" type="range" min="32" max="120" value="72">
+  <div class="chk"><input id="just" type="checkbox" checked><label for="just" style="margin:0">Justificar párrafos</label></div>
+  <div class="chk"><input id="guio" type="checkbox" checked><label for="guio" style="margin:0">Partir palabras con guion (español)</label></div>
+  <div class="chk"><input id="rej" type="checkbox"><label for="rej" style="margin:0">Ver márgenes</label></div>
+  <div id="estado"></div>
+  <button onclick="copiar()">Copiar valores (CSS)</button>
+  <button onclick="reiniciar()" style="background:#556">Valores iniciales</button>
+  <p style="color:#556;font-size:.78rem;margin-top:1rem">Convención tipográfica, no norma: 45–75 caracteres por línea se lee cómodo (Bringhurst, <i>The Elements of Typographic Style</i>; no verificado aquí). Justificar con columnas angostas deja «ríos» blancos: por eso las listas y tablas van alineadas a la izquierda.</p>
+</aside>
+<main><div id="caja"><div id="escala"><div class="lamina" id="lamina">
+  <div class="guia" id="guia"></div>
+  <h2>Una base que se acumula</h2>
+  <div class="sub">Dos cursos, un agente de IA y una persona en el circuito</div>
+  <div class="col">
+    <p>El agente <b>no responde desde cero</b>: construye y mantiene una wiki en tres capas. Las fuentes de <code>raw/</code> nunca se modifican; las páginas de <code>wiki/</code> las escribe el agente, y las reglas de <code>schema/</code> son el contrato que obedece. Cada afirmación lleva su cita: <i>(l. 47)</i> en IDB y <i>(05:12)</i> en IEE.</p>
+    <ul><li>Buscar antes de crear: título, alias y sinónimos en español e inglés.</li><li>Actualizar, no duplicar: lo nuevo se suma sin borrar lo previo.</li><li>Enlaces: al menos dos parientes dentro del texto.</li></ul>
+  </div>
+  <table><tr><th>Curso</th><th>Cita</th><th>Clases</th><th>Páginas</th></tr><tr><td>IDB</td><td>línea</td><td>10</td><td>77</td></tr><tr><td>IEE</td><td>minuto</td><td>16</td><td>105</td></tr></table>
+  <div class="tarj"><b>Persona en el circuito.</b> El agente lee, propone, espera y después escribe; solo una persona revisora marca algo como verificado.</div>
+  <footer><span>Base de conocimiento IDB · IER-UNAM</span><span>7 / 21</span></footer>
+</div></div></div></main>
+<script>
+const $=id=>document.getElementById(id), L=$("lamina");
+const def={cuerpo:28,tit:56,interlineado:1.45,ancho:64,parrafo:0.55,margen:72,just:true,guio:true,rej:false};
+function aplicar(){
+  const v=k=>$(k).value;
+  L.style.setProperty("--cuerpo",v("cuerpo")+"px"); L.style.setProperty("--tit",v("tit")+"px");
+  L.style.setProperty("--interlineado",v("interlineado")); L.style.setProperty("--ancho",v("ancho")+"ch");
+  L.style.setProperty("--parrafo",v("parrafo")+"em"); L.style.setProperty("--margen",v("margen")+"px");
+  L.style.setProperty("--alin",$("just").checked?"justify":"left"); L.style.setProperty("--guiones",$("guio").checked?"auto":"manual");
+  $("guia").style.display=$("rej").checked?"block":"none";
+  $("vc").textContent=v("cuerpo")+" px"; $("vt").textContent=v("tit")+" px"; $("vi").textContent=v("interlineado");
+  $("va").textContent=v("ancho")+" ch"; $("vp").textContent=v("parrafo")+" em"; $("vm").textContent=v("margen")+" px";
+  const pie=L.querySelector("footer").getBoundingClientRect(), sc=L.getBoundingClientRect().height/720;
+  const ultimo=L.querySelector(".tarj").getBoundingClientRect();
+  const cabe=(pie.top-ultimo.bottom)/sc>=8 && L.scrollHeight<=721;
+  $("estado").className=cabe?"ok":"mal"; $("estado").textContent=cabe?"✓ El contenido cabe en la lámina":"✗ No cabe: baja tamaño, interlineado o espacios";
+  ajustar();
+}
+function ajustar(){const w=$("caja").clientWidth,s=Math.min(1,w/1280);$("escala").style.transform=`scale(${s})`;$("escala").style.height=720*s+"px";$("escala").style.width=1280*s+"px";}
+function copiar(){
+  const t=`:root{\n  --cuerpo:${$("cuerpo").value}px;\n  --titulo:${$("tit").value}px;\n  --interlineado:${$("interlineado").value};\n  --ancho-texto:${$("ancho").value}ch;\n  --espacio-parrafo:${$("parrafo").value}em;\n  --margen:${$("margen").value}px;\n  --alineacion:${$("just").checked?"justify":"left"};\n  --guiones:${$("guio").checked?"auto":"manual"};\n}`;
+  navigator.clipboard.writeText(t).then(()=>alert("Copiado:\n\n"+t));
+}
+function reiniciar(){for(const k of ["cuerpo","tit","interlineado","ancho","parrafo","margen"])$(k).value=def[k];$("just").checked=def.just;$("guio").checked=def.guio;$("rej").checked=false;aplicar();}
+document.querySelectorAll("input").forEach(e=>e.addEventListener("input",aplicar)); addEventListener("resize",ajustar);
+document.fonts.ready.then(aplicar); aplicar();
+</script>
+</body></html>

@@ -1,0 +1,35 @@
+// Tema «azul-234» · tono 234.3 · acento 54.3 (complementario)
+// Generado por generar_paleta.py; no editar a mano.
+$fondo-claro: #f2f9fd;
+$tarjeta-claro: #e1f4ff;
+$borde-claro: #c5d6df;
+$texto-claro: #0f1e27;
+$suave-claro: #44555f;
+$principal-claro: #0090c7;
+$acento-claro: #974d0a;
+$fondo-oscuro: #050f15;
+$tarjeta-oscuro: #131b20;
+$borde-oscuro: #1e313c;
+$texto-oscuro: #e8f6ff;
+$suave-oscuro: #9fc3d9;
+$principal-oscuro: #00a7e5;
+$acento-oscuro: #ff984d;
+
+:root {
+  --fondo: #f2f9fd;
+  --tarjeta: #e1f4ff;
+  --borde: #c5d6df;
+  --texto: #0f1e27;
+  --suave: #44555f;
+  --principal: #0090c7;
+  --acento: #974d0a;
+}
+:root.oscuro {
+  --fondo: #050f15;
+  --tarjeta: #131b20;
+  --borde: #1e313c;
+  --texto: #e8f6ff;
+  --suave: #9fc3d9;
+  --principal: #00a7e5;
+  --acento: #ff984d;
+}

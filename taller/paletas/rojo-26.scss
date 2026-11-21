@@ -1,0 +1,35 @@
+// Tema «rojo-26» · tono 26.1 · acento 206.1 (complementario)
+// Generado por generar_paleta.py; no editar a mano.
+$fondo-claro: #fff5f4;
+$tarjeta-claro: #f8e9e7;
+$borde-claro: #e9c9c5;
+$texto-claro: #28100e;
+$suave-claro: #7a5551;
+$principal-claro: #d7645c;
+$acento-claro: #006871;
+$fondo-oscuro: #181110;
+$tarjeta-oscuro: #261615;
+$borde-oscuro: #4a2f2c;
+$texto-oscuro: #ffedeb;
+$suave-oscuro: #cab6b4;
+$principal-oscuro: #fc5550;
+$acento-oscuro: #00d2e5;
+
+:root {
+  --fondo: #fff5f4;
+  --tarjeta: #f8e9e7;
+  --borde: #e9c9c5;
+  --texto: #28100e;
+  --suave: #7a5551;
+  --principal: #d7645c;
+  --acento: #006871;
+}
+:root.oscuro {
+  --fondo: #181110;
+  --tarjeta: #261615;
+  --borde: #4a2f2c;
+  --texto: #ffedeb;
+  --suave: #cab6b4;
+  --principal: #fc5550;
+  --acento: #00d2e5;
+}

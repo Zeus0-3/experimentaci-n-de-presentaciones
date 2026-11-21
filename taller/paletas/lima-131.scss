@@ -1,0 +1,35 @@
+// Tema «lima-131» · tono 131.6 · acento 311.6 (complementario)
+// Generado por generar_paleta.py; no editar a mano.
+$fondo-claro: #f8fff4;
+$tarjeta-claro: #e4f3d9;
+$borde-claro: #c9d7bf;
+$texto-claro: #171c13;
+$suave-claro: #414e36;
+$principal-claro: #6a9442;
+$acento-claro: #8c3fb5;
+$fondo-oscuro: #0b0f08;
+$tarjeta-oscuro: #192112;
+$borde-oscuro: #353d2f;
+$texto-oscuro: #e7efe2;
+$suave-oscuro: #a1b394;
+$principal-oscuro: #96e044;
+$acento-oscuro: #d183ff;
+
+:root {
+  --fondo: #f8fff4;
+  --tarjeta: #e4f3d9;
+  --borde: #c9d7bf;
+  --texto: #171c13;
+  --suave: #414e36;
+  --principal: #6a9442;
+  --acento: #8c3fb5;
+}
+:root.oscuro {
+  --fondo: #0b0f08;
+  --tarjeta: #192112;
+  --borde: #353d2f;
+  --texto: #e7efe2;
+  --suave: #a1b394;
+  --principal: #96e044;
+  --acento: #d183ff;
+}

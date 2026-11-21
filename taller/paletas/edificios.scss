@@ -1,0 +1,35 @@
+// Tema «edificios» · tono 45 · acento 225 (complementario)
+// Generado por generar_paleta.py; no editar a mano.
+$fondo-claro: #fffbf9;
+$tarjeta-claro: #ffeae1;
+$borde-claro: #eacabc;
+$texto-claro: #2e180e;
+$suave-claro: #6d5951;
+$principal-claro: #cb5c1e;
+$acento-claro: #007595;
+$fondo-oscuro: #100c0a;
+$tarjeta-oscuro: #26140b;
+$borde-oscuro: #3c2c24;
+$texto-oscuro: #ffe7dd;
+$suave-oscuro: #c0a79c;
+$principal-oscuro: #e76822;
+$acento-oscuro: #10cbff;
+
+:root {
+  --fondo: #fffbf9;
+  --tarjeta: #ffeae1;
+  --borde: #eacabc;
+  --texto: #2e180e;
+  --suave: #6d5951;
+  --principal: #cb5c1e;
+  --acento: #007595;
+}
+:root.oscuro {
+  --fondo: #100c0a;
+  --tarjeta: #26140b;
+  --borde: #3c2c24;
+  --texto: #ffe7dd;
+  --suave: #c0a79c;
+  --principal: #e76822;
+  --acento: #10cbff;
+}

@@ -1,0 +1,35 @@
+// Tema «ambiente» · tono 160 · acento 340 (complementario)
+// Generado por generar_paleta.py; no editar a mano.
+$fondo-claro: #f5faf7;
+$tarjeta-claro: #e5f1ea;
+$borde-claro: #c9e5d5;
+$texto-claro: #0b1912;
+$suave-claro: #56665d;
+$principal-claro: #009561;
+$acento-claro: #99297d;
+$fondo-oscuro: #0a110d;
+$tarjeta-oscuro: #0d261a;
+$borde-oscuro: #1d3a2b;
+$texto-oscuro: #e1f8eb;
+$suave-oscuro: #a5bbae;
+$principal-oscuro: #5bc692;
+$acento-oscuro: #ffaae3;
+
+:root {
+  --fondo: #f5faf7;
+  --tarjeta: #e5f1ea;
+  --borde: #c9e5d5;
+  --texto: #0b1912;
+  --suave: #56665d;
+  --principal: #009561;
+  --acento: #99297d;
+}
+:root.oscuro {
+  --fondo: #0a110d;
+  --tarjeta: #0d261a;
+  --borde: #1d3a2b;
+  --texto: #e1f8eb;
+  --suave: #a5bbae;
+  --principal: #5bc692;
+  --acento: #ffaae3;
+}

@@ -1,0 +1,35 @@
+// Tema «rojo-20» · tono 20.9 · acento 200.9 (complementario)
+// Generado por generar_paleta.py; no editar a mano.
+$fondo-claro: #fff8f8;
+$tarjeta-claro: #ffedec;
+$borde-claro: #eeccca;
+$texto-claro: #2d2322;
+$suave-claro: #6b5b5b;
+$principal-claro: #d25f61;
+$acento-claro: #007076;
+$fondo-oscuro: #1d1211;
+$tarjeta-oscuro: #221615;
+$borde-oscuro: #3a2b2b;
+$texto-oscuro: #ffefee;
+$suave-oscuro: #d6b0ae;
+$principal-oscuro: #f15d63;
+$acento-oscuro: #00e6f1;
+
+:root {
+  --fondo: #fff8f8;
+  --tarjeta: #ffedec;
+  --borde: #eeccca;
+  --texto: #2d2322;
+  --suave: #6b5b5b;
+  --principal: #d25f61;
+  --acento: #007076;
+}
+:root.oscuro {
+  --fondo: #1d1211;
+  --tarjeta: #221615;
+  --borde: #3a2b2b;
+  --texto: #ffefee;
+  --suave: #d6b0ae;
+  --principal: #f15d63;
+  --acento: #00e6f1;
+}

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><title>Muestras de tipografía</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+/* Fuentes incrustadas desde taller/fuentes/ (Fontsource, licencia OFL-1.1). Funcionan sin internet. */
+@font-face{font-family:Poppins;font-weight:400;src:url(fuentes/poppins-latin-400-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:600;src:url(fuentes/poppins-latin-600-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:700;src:url(fuentes/poppins-latin-700-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:400;src:url(fuentes/outfit-latin-400-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:600;src:url(fuentes/outfit-latin-600-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:700;src:url(fuentes/outfit-latin-700-normal.woff2)}
+@font-face{font-family:"Plus Jakarta Sans";font-weight:400;src:url(fuentes/plus-jakarta-sans-latin-400-normal.woff2)}
+@font-face{font-family:"Plus Jakarta Sans";font-weight:600;src:url(fuentes/plus-jakarta-sans-latin-600-normal.woff2)}
+@font-face{font-family:"Plus Jakarta Sans";font-weight:700;src:url(fuentes/plus-jakarta-sans-latin-700-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:400;src:url(fuentes/fraunces-latin-400-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:600;src:url(fuentes/fraunces-latin-600-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:700;src:url(fuentes/fraunces-latin-700-normal.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:400;src:url(fuentes/source-serif-4-latin-400-normal.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:600;src:url(fuentes/source-serif-4-latin-600-normal.woff2)}
+@font-face{font-family:"Source Serif 4";font-weight:700;src:url(fuentes/source-serif-4-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:400;src:url(fuentes/inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(fuentes/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(fuentes/inter-latin-700-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:400;src:url(fuentes/source-sans-3-latin-400-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:600;src:url(fuentes/source-sans-3-latin-600-normal.woff2)}
+@font-face{font-family:"Source Sans 3";font-weight:700;src:url(fuentes/source-sans-3-latin-700-normal.woff2)}
+@font-face{font-family:"IBM Plex Sans";font-weight:400;src:url(fuentes/ibm-plex-sans-latin-400-normal.woff2)}
+@font-face{font-family:"IBM Plex Sans";font-weight:600;src:url(fuentes/ibm-plex-sans-latin-600-normal.woff2)}
+@font-face{font-family:"IBM Plex Sans";font-weight:700;src:url(fuentes/ibm-plex-sans-latin-700-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:400;src:url(fuentes/jetbrains-mono-latin-400-normal.woff2)}
+@font-face{font-family:"JetBrains Mono";font-weight:700;src:url(fuentes/jetbrains-mono-latin-700-normal.woff2)}
+@font-face{font-family:"Fira Code";font-weight:400;src:url(fuentes/fira-code-latin-400-normal.woff2)}
+@font-face{font-family:"Fira Code";font-weight:700;src:url(fuentes/fira-code-latin-700-normal.woff2)}
+@font-face{font-family:"IBM Plex Mono";font-weight:400;src:url(fuentes/ibm-plex-mono-latin-400-normal.woff2)}
+@font-face{font-family:"IBM Plex Mono";font-weight:700;src:url(fuentes/ibm-plex-mono-latin-700-normal.woff2)}
+
+:root{--fondo:#f5fdfd;--tarjeta:#def2f1;--borde:#b1dedc;--texto:#122020;--suave:#2e5b5a;--principal:#009492;--acento:#aa394e}
+*{box-sizing:border-box}
+body{margin:0;padding:2rem clamp(1rem,4vw,3rem);background:var(--fondo);color:var(--texto);font:18px/1.5 "Source Sans 3",sans-serif}
+h1.pag{font:700 1.6rem "Inter";color:var(--texto);margin:0 0 .3rem}
+p.nota{color:var(--suave);max-width:70ch;margin:.2rem 0 1.2rem}
+h2.sec{font:600 1.1rem Inter;text-transform:uppercase;letter-spacing:.08em;color:var(--acento);margin:2.4rem 0 .6rem;border-bottom:2px solid var(--borde);padding-bottom:.3rem}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:1rem}
+.muestra{background:#fff;border:1px solid var(--borde);border-radius:12px;padding:1rem 1.3rem}
+.muestra .et{font:600 .72rem Inter;color:var(--suave);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.muestra .t{font-size:2.1rem;line-height:1.15;color:var(--principal);margin:.1rem 0 .5rem}
+.muestra .t2{font-size:1.15rem;color:var(--texto)}
+.muestra .lic{font:.7rem Inter;color:var(--suave);margin-top:.6rem}
+table.ej{border-collapse:collapse;width:100%;font-size:.9rem;margin-top:.6rem}
+.ej th{background:var(--tarjeta);text-align:left;padding:.3rem .6rem;border:1px solid var(--borde)}
+.ej td{padding:.3rem .6rem;border:1px solid var(--borde)}
+.par .t{font-size:1.9rem}
+/* terminales */
+.term{background:#0d1117;border-radius:12px;box-shadow:0 8px 24px #0004;overflow:hidden}
+.term .barra{display:flex;gap:.4rem;align-items:center;padding:.55rem .8rem;background:#161b22}
+.term .barra i{width:.75rem;height:.75rem;border-radius:50%;display:block}
+.term .barra b{margin-left:.6rem;font:500 .8rem Inter;color:#8b949e}
+.term pre{margin:0;padding:1rem 1.2rem;min-height:11.5em;color:#e6edf3;font-size:1.05rem;line-height:1.55;white-space:pre-wrap}
+.p{color:#3fb950}.c{color:#79c0ff}.s{color:#e3b341}.m{color:#8b949e}.o{color:#7ee787}.e{color:#ff7b72}
+.cur{display:inline-block;width:.6em;height:1.1em;background:#e6edf3;vertical-align:text-bottom;animation:par 1s steps(1) infinite}
+@keyframes par{50%{opacity:0}}
+button{font:600 .85rem Inter;border:0;background:var(--principal);color:#fff;padding:.4rem .9rem;border-radius:8px;cursor:pointer;margin:.2rem .3rem .6rem 0}
+</style>
+<body>
+<h1 class="pag">Muestras de tipografía</h1>
+<p class="nota">Todas con los colores del tema «turquesa-192» del generador de paletas y fuentes incrustadas (licencia OFL-1.1, comprobada en el paquete de Fontsource de cada una). Texto de ejemplo en español, con acentos y ecuaciones, a tamaño de diapositiva. Elige con los ojos.</p>
+
+<h2 class="sec">1 · Títulos (elige 1 o 2 finalistas)</h2>
+<div class="rejilla">
+  <div class="muestra"><div class="et">Poppins · geométrica</div><div class="t" style="font-family:Poppins;font-weight:600">Una base que se acumula</div><div class="t2" style="font-family:Poppins">Zona térmica ≠ espacio · ¿qué simula EnergyPlus?</div><div class="lic">OFL-1.1</div></div>
+  <div class="muestra"><div class="et">Outfit · geométrica</div><div class="t" style="font-family:Outfit;font-weight:600">Una base que se acumula</div><div class="t2" style="font-family:Outfit">Zona térmica ≠ espacio · ¿qué simula EnergyPlus?</div><div class="lic">OFL-1.1</div></div>
+  <div class="muestra"><div class="et">Plus Jakarta Sans · moderna</div><div class="t" style="font-family:'Plus Jakarta Sans';font-weight:700">Una base que se acumula</div><div class="t2" style="font-family:'Plus Jakarta Sans'">Zona térmica ≠ espacio · ¿qué simula EnergyPlus?</div><div class="lic">OFL-1.1</div></div>
+  <div class="muestra"><div class="et">Fraunces · serif con carácter</div><div class="t" style="font-family:Fraunces;font-weight:600">Una base que se acumula</div><div class="t2" style="font-family:Fraunces">Zona térmica ≠ espacio · ¿qué simula EnergyPlus?</div><div class="lic">OFL-1.1</div></div>
+  <div class="muestra"><div class="et">Source Serif 4 · serif editorial</div><div class="t" style="font-family:'Source Serif 4';font-weight:700">Una base que se acumula</div><div class="t2" style="font-family:'Source Serif 4'">Zona térmica ≠ espacio · ¿qué simula EnergyPlus?</div><div class="lic">OFL-1.1</div></div>
+  <div class="muestra"><div class="et">Inter · neutra</div><div class="t" style="font-family:Inter;font-weight:700">Una base que se acumula</div><div class="t2" style="font-family:Inter">Zona térmica ≠ espacio · ¿qué simula EnergyPlus?</div><div class="lic">OFL-1.1</div></div>
+  <div class="muestra"><div class="et">Source Sans 3 · humanista (la actual)</div><div class="t" style="font-family:'Source Sans 3';font-weight:700">Una base que se acumula</div><div class="t2" style="font-family:'Source Sans 3'">Zona térmica ≠ espacio · ¿qué simula EnergyPlus?</div><div class="lic">OFL-1.1</div></div>
+  <div class="muestra"><div class="et">IBM Plex Sans · técnica</div><div class="t" style="font-family:'IBM Plex Sans';font-weight:700">Una base que se acumula</div><div class="t2" style="font-family:'IBM Plex Sans'">Zona térmica ≠ espacio · ¿qué simula EnergyPlus?</div><div class="lic">OFL-1.1</div></div>
+</div>
+
+<h2 class="sec">2 · Cuerpo, tablas y notas (nivel apunte)</h2>
+<div class="rejilla">
+  <div class="muestra" style="font-family:Inter;font-size:1.05rem"><div class="et">Inter</div>
+    <p>El agente <b>no responde desde cero</b>: construye y mantiene una wiki. Cada afirmación lleva su fuente, <i>(l. 47)</i> en IDB y <i>(05:12)</i> en IEE, y la temperatura de neutralidad es $T_n = 13.5 + 0.54\,T_{om}$ °C.</p>
+    <table class="ej"><tr><th>Curso</th><th>Citas</th><th>Clases</th></tr><tr><td>IDB</td><td>línea</td><td>10</td></tr><tr><td>IEE</td><td>minuto</td><td>16</td></tr></table></div>
+  <div class="muestra" style="font-family:'Source Sans 3';font-size:1.15rem"><div class="et">Source Sans 3</div>
+    <p>El agente <b>no responde desde cero</b>: construye y mantiene una wiki. Cada afirmación lleva su fuente, <i>(l. 47)</i> en IDB y <i>(05:12)</i> en IEE, y la temperatura de neutralidad es $T_n = 13.5 + 0.54\,T_{om}$ °C.</p>
+    <table class="ej"><tr><th>Curso</th><th>Citas</th><th>Clases</th></tr><tr><td>IDB</td><td>línea</td><td>10</td></tr><tr><td>IEE</td><td>minuto</td><td>16</td></tr></table></div>
+  <div class="muestra" style="font-family:'IBM Plex Sans';font-size:1.05rem"><div class="et">IBM Plex Sans</div>
+    <p>El agente <b>no responde desde cero</b>: construye y mantiene una wiki. Cada afirmación lleva su fuente, <i>(l. 47)</i> en IDB y <i>(05:12)</i> en IEE, y la temperatura de neutralidad es $T_n = 13.5 + 0.54\,T_{om}$ °C.</p>
+    <table class="ej"><tr><th>Curso</th><th>Citas</th><th>Clases</th></tr><tr><td>IDB</td><td>línea</td><td>10</td></tr><tr><td>IEE</td><td>minuto</td><td>16</td></tr></table></div>
+</div>
+
+<h2 class="sec">3 · Parejas sugeridas (título + cuerpo)</h2>
+<div class="rejilla par">
+  <div class="muestra"><div class="et">A · Poppins + Inter</div><div class="t" style="font-family:Poppins;font-weight:600">Persona en el circuito</div><div style="font-family:Inter">El agente lee, propone, <b>espera</b> y después escribe. Nunca actúa por su cuenta sobre la wiki.</div></div>
+  <div class="muestra"><div class="et">B · Fraunces + Source Sans 3</div><div class="t" style="font-family:Fraunces;font-weight:600">Persona en el circuito</div><div style="font-family:'Source Sans 3';font-size:1.1em">El agente lee, propone, <b>espera</b> y después escribe. Nunca actúa por su cuenta sobre la wiki.</div></div>
+  <div class="muestra"><div class="et">C · Plus Jakarta Sans + IBM Plex Sans</div><div class="t" style="font-family:'Plus Jakarta Sans';font-weight:700">Persona en el circuito</div><div style="font-family:'IBM Plex Sans'">El agente lee, propone, <b>espera</b> y después escribe. Nunca actúa por su cuenta sobre la wiki.</div></div>
+  <div class="muestra"><div class="et">D · Outfit + Source Sans 3</div><div class="t" style="font-family:Outfit;font-weight:600">Persona en el circuito</div><div style="font-family:'Source Sans 3';font-size:1.1em">El agente lee, propone, <b>espera</b> y después escribe. Nunca actúa por su cuenta sobre la wiki.</div></div>
+</div>
+
+<h2 class="sec">4 · Código: terminal con escritura animada (tres monoespaciadas)</h2>
+<p class="nota">Es tu idea de la terminal negra donde el comando se «escribe» solo, con colores de sintaxis. Aquí se compara solo la tipografía; el componente completo (tamaños, posición, pausas, copiar) lo afinamos en el aspecto 4.</p>
+<button onclick="reproducir()">▶ Repetir animación</button>
+<div class="rejilla">
+  <div class="term"><div class="barra"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i><b>JetBrains Mono</b></div><pre data-fuente="JetBrains Mono" style="font-family:'JetBrains Mono'"></pre></div>
+  <div class="term"><div class="barra"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i><b>Fira Code</b></div><pre style="font-family:'Fira Code'"></pre></div>
+  <div class="term"><div class="barra"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i><b>IBM Plex Mono</b></div><pre style="font-family:'IBM Plex Mono'"></pre></div>
+</div>
+
+<script>
+const guion = [
+  ["p","$ "],["t","uv run scripts/check.py wiki/\n",60],
+  ["o","182 páginas · 0 errores · 0 enlaces rotos\n",0],
+  ["m","# la persona decide qué se ingiere\n",0],
+  ["p","$ "],["t","git commit -m ",60],["s","\"Ingesta IDB 001\"",70],["t","\n",0],
+  ["o","[main 385a7cd] 11 archivos cambiados\n",0],
+  ["p","$ "],["cur",""]
+];
+const clases={p:"p",t:"c",s:"s",m:"m",o:"o"};
+let ciclo=0;
+function reproducir(){
+  const mi=++ciclo;
+  document.querySelectorAll(".term pre").forEach(async pre=>{
+    pre.innerHTML="";
+    for(const [tipo,txt,vel] of guion){
+      if(mi!==ciclo) return;
+      if(tipo==="cur"){ pre.insertAdjacentHTML("beforeend",'<span class="cur"></span>'); continue; }
+      const span=document.createElement("span"); span.className=tipo==="t"?"":clases[tipo]; pre.append(span);
+      if(!vel){ span.textContent=txt; await new Promise(r=>setTimeout(r,250)); continue; }
+      for(const ch of txt){ if(mi!==ciclo) return; span.textContent+=ch; await new Promise(r=>setTimeout(r,vel)); }
+    }
+  });
+}
+reproducir();
+</script>
+</body></html>

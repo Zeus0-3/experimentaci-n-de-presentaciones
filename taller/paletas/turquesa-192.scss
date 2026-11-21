@@ -1,0 +1,35 @@
+// Tema «turquesa-192» · tono 192.9 · acento 12.9 (complementario)
+// Generado por generar_paleta.py; no editar a mano.
+$fondo-claro: #f5fdfd;
+$tarjeta-claro: #def2f1;
+$borde-claro: #b1dedc;
+$texto-claro: #122020;
+$suave-claro: #2e5b5a;
+$principal-claro: #009492;
+$acento-claro: #aa394e;
+$fondo-oscuro: #0e1313;
+$tarjeta-oscuro: #0b1c1b;
+$borde-oscuro: #283c3c;
+$texto-oscuro: #e0f0ef;
+$suave-oscuro: #a5c7c5;
+$principal-oscuro: #00b7b5;
+$acento-oscuro: #ffa0aa;
+
+:root {
+  --fondo: #f5fdfd;
+  --tarjeta: #def2f1;
+  --borde: #b1dedc;
+  --texto: #122020;
+  --suave: #2e5b5a;
+  --principal: #009492;
+  --acento: #aa394e;
+}
+:root.oscuro {
+  --fondo: #0e1313;
+  --tarjeta: #0b1c1b;
+  --borde: #283c3c;
+  --texto: #e0f0ef;
+  --suave: #a5c7c5;
+  --principal: #00b7b5;
+  --acento: #ffa0aa;
+}
