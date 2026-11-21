@@ -709,7 +709,7 @@ function lamina(n){
   <div class="cuerpo"><p>Cada fuente nueva <b>enriquece las páginas existentes</b>: se busca antes de crear, se agrega lo nuevo sin borrar lo previo y se suma la clase a su lista. Así un concepto es una sola página para los dos cursos.</p>
   <ul><li>Un concepto, una página.</li><li>Cada afirmación lleva su cita.</li><li>Enlaces a páginas hermanas.</li></ul></div>
   <div class="nota">${n==4?"<b>1</b> Una sola página por concepto evita que dos clases lo expliquen distinto.":"Fuente: conteo de la base, ejemplo."}</div>
-  <div class="pie"><span>Una base que se acumula · Zeus · IER-UNAM</span><span>7 / 21</span></div></div>`;
+  <div class="pie"><span>Una base que se acumula · Zeus</span><span>7 / 21</span></div></div>`;
 }
 $("m").innerHTML=E.map(([nom,min,rec],i)=>{const n=i+1;return `<div class="marco"><h3><span>${n} · ${nom}</span> ${rec?`<span class="rec">★ recomendado${REC[n]?" · "+REC[n]:""}</span>`:""}<span class="min">minimalismo ${min}</span>
  <label class="mi"><input type="checkbox" value="${n}" onchange="cuenta()"> Me gusta</label></h3><div class="caja">${lamina(n)}</div></div>`;}).join("");

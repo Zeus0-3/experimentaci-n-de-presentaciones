@@ -156,10 +156,10 @@ function sortear(){if(S.lock)return;S.pf=$("perfil").value;if(!$("fp").checked){
 function bloquear(){S.lock=!S.lock;guardar();pintar();}
 function compartir(){navigator.clipboard.writeText(location.href).then(()=>alert("Enlace copiado:\n"+location.href))}
 /* ───── láminas con texto genérico ───── */
-const PIE=n=>`<div class="pie"><span>Título corto · Autoría · Institución</span><span class="c">Sección actual</span><span class="d">${n} / 8</span></div>`;
+const PIE=n=>`<div class="pie"><span>Título corto · Autoría</span><span class="c">Sección actual</span><span class="d">${n} / 8</span></div>`;
 const UL=`<ul><li>Primera idea de apoyo, en una línea.</li><li>Segunda idea, también breve.</li><li>Tercera idea con su fuente.</li></ul>`;
 const LAM=[
- n=>`<div class="lam t-portada"><div class="deco"></div><div class="raya"></div><h1>Título que afirma una idea central</h1><div class="sub">Subtítulo que explica de qué trata la presentación</div><div class="aut">Nombre de la persona<small>Institución · Fecha</small></div></div>`,
+ n=>`<div class="lam t-portada"><div class="deco"></div><div class="raya"></div><h1>Título que afirma una idea central</h1><div class="sub">Subtítulo que explica de qué trata la presentación</div><div class="aut">Nombre de la persona<small>Fecha</small></div></div>`,
  n=>`<div class="lam t-seccion"><div class="num">01</div><h2>Nombre de la sección</h2><div class="sub">Una frase que anuncia lo que sigue</div>${PIE(2)}</div>`,
  n=>`<div class="lam"><div class="deco"></div><div class="fv"></div><div class="sec">01 · Sección</div><h2>La idea de esta diapositiva, dicha completa</h2><div class="cuerpo"><p>Texto genérico de apunte: un párrafo que explica la idea con claridad, justificado y con guiones, donde cada afirmación llevaría su fuente. <b>Una palabra clave</b> en negritas.</p>${UL}</div><div class="nota">1 Nota al margen de ejemplo.</div>${PIE(3)}</div>`,
  n=>`<div class="lam"><div class="deco"></div><div class="fv"></div><div class="sec">01 · Sección</div><h2>Lo que muestra la gráfica, en una frase</h2><div class="slot" style="height:350px;margin-top:22px"><div><b>AQUÍ IRÁ LA GRÁFICA</b><small>Serie de tiempo · ancho completo · con la fuente debajo</small></div></div>${PIE(4)}</div>`,

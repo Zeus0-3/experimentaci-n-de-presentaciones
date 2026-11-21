@@ -9,7 +9,7 @@
 - **Explicador de armonías** (`armonias.html`) con rueda de color.
 - **Tipografía:** Source Serif 4 (títulos), Source Sans 3 (cuerpo), JetBrains Mono (código), todas OFL-1.1, incrustadas. Lámina 1280×720: cuerpo 29 px, título 56 px, interlineado 1.38, ancho 64ch, justificado con guiones.
 - **Componentes de código** (`codigo.html`): terminal, notebook Jupyter, archivo en editor, antes/después, salida o registro. El botón de copiar copia solo la entrada.
-- **Estructura de diapositiva:** títulos que afirman una idea; pie con número y total, título corto, autor e institución y sección; secciones con color lleno; portada editorial.
+- **Estructura de diapositiva:** títulos que afirman una idea; pie con número y total, título corto, autoría y sección; secciones con color lleno; portada editorial.
 - **Tarjetas:** se probaron cuatro direcciones (sin caja con línea y número, tarjeta limpia con sombra, franja lateral, bloque lleno) y **ninguna convenció** («muy de IA»); se descartaron y se buscó un estilo más minimalista.
 - **Estilos explorados:** se compararon 20 estilos (`estilos.html`) y se eligieron 11 para el sorteo: Suizo, Editorial, Tufte, Cuaderno de laboratorio, Plano técnico, Periodismo de datos, Bento plano, Risografía, Neobrutalismo, Bauhaus y Memphis. El cristal (glassmorphism) y el gradient mesh se **descartaron** por informales (`vinetas.html`); las viñetas vigentes son plana, línea fina, barra lateral y marcador cuadrado.
 - **Página unificada:** `taller/index.html` reúne todas las apps con navegación; cada página sigue funcionando por separado y sin internet.

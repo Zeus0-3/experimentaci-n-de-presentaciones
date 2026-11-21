@@ -42,7 +42,7 @@ Resumen. El registro completo, con fechas y razones, está en [`docs/DISENO.md`]
 - **Tipografía.** Source Serif 4 para títulos, Source Sans 3 para cuerpo, JetBrains Mono para código. Incrustadas para abrir sin internet.
 - **Espacios.** Lámina de 1280×720: cuerpo 29 px, título 56 px, interlineado 1.38, ancho 64ch, párrafos justificados con guiones.
 - **Código como en el entorno de uso.** Terminal, notebook, editor y diferencias se ven como donde la persona los usa. El botón de copiar copia solo la entrada: sin prompt, sin `In [1]:`, sin salida, sin números de línea.
-- **Estructura de diapositiva.** Títulos que afirman una idea. Pie con número y total, título corto, autor e institución y sección. Secciones con color lleno.
+- **Estructura de diapositiva.** Títulos que afirman una idea. Pie con número y total, título corto, autoría y sección. Secciones con color lleno.
 
 ## Regenerar la galería de paletas
 
@@ -107,4 +107,4 @@ Pendiente de decidir: la licencia y las tarjetas (las cuatro direcciones probada
 
 ## Créditos y autoría
 
-Zeus ([Zeus0-3](https://github.com/Zeus0-3)), Instituto de Energías Renovables, UNAM.
+Zeus ([Zeus0-3](https://github.com/Zeus0-3)).
